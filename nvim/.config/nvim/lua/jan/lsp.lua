@@ -1,9 +1,7 @@
-require("null-ls").config {debug = true}
 local saga = require 'lspsaga'
 local lspconfig = require'lspconfig'
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-lspconfig["null-ls"].setup {}
 saga.init_lsp_saga()
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -14,13 +12,14 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 	}
 )
 
-local function on_attach()
+local function on_attach(client)
 end
 
 lspconfig.tsserver.setup{
     capabilities = capabilities,
-    flags = {debounce_text_changes = 500},
-    on_attach= function(client)
+
+    on_attach = function(client)
+        on_attach(client)
         client.resolved_capabilities.document_formatting = false
 
         local ts_utils = require("nvim-lsp-ts-utils")
@@ -51,7 +50,7 @@ lspconfig.tsserver.setup{
 
             -- formatting
             enable_formatting = true,
-            formatter = "prettierd",
+            formatter = "prettier",
             formatter_config_fallback = nil;
             formatter_opts = {},
 

@@ -13,7 +13,7 @@ Plug 'ajh17/Spacegray.vim'
 
 " LSP
 Plug 'neovim/nvim-lspconfig'
-Plug 'jose-elias-alvarez/null-ls.nvim'
+" Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'onsails/lspkind-nvim'
 
@@ -35,8 +35,7 @@ Plug 'mattn/efm-langserver'
 Plug 'Yggdroot/indentLine'
 
 " LSPSaga code action fix
-" Plug 'glepnir/lspsaga.nvim'
-Plug 'tami5/lspsaga.nvim', { 'branch': 'nvim51' }
+Plug 'tami5/lspsaga.nvim', { 'branch': 'nvim6.0' }
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
 "Plug 'nvim-lua/completion-nvim'
@@ -53,8 +52,6 @@ Plug 'tpope/vim-surround'
 
 " Harpoon
 Plug 'ThePrimeagen/harpoon'
-
-Plug 'ap/vim-css-color'
 
 "Snippets
 Plug 'L3MON4D3/LuaSnip'
