@@ -10,7 +10,9 @@ require("telescope").setup{
         grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
         qflist_previewer = require("telescope.previewers").vim_buffer_qflist.new,
         file_ignore_patterns = {
-            "node_modules"
+            "node_modules",
+            "build",
+            "dist"
         },
         layout_strategy = "vertical",
         layout_config = {

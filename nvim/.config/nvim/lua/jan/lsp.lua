@@ -4,6 +4,8 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 
 saga.init_lsp_saga()
 
+require "lsp_signature".setup();
+
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 	vim.lsp.diagnostic.on_publish_diagnostics, {
 		virtual_text = false,
@@ -17,6 +19,7 @@ end
 
 lspconfig.tsserver.setup{
     capabilities = capabilities,
+    root_dir = lspconfig.util.root_pattern("yarn.lock", "lerna.json", ".git"),
 
     on_attach = function(client)
         on_attach(client)
@@ -45,6 +48,7 @@ lspconfig.tsserver.setup{
             eslint_enable_code_actions = false,
             eslint_enable_disable_comments = true,
             eslint_bin = "eslint_d",
+            eslint_config_fallback = nil,
             eslint_enable_diagnostics = false,
             eslint_opts = {},
 
@@ -68,7 +72,9 @@ lspconfig.tsserver.setup{
         ts_utils.setup_client(client)
     end
 }
-require'lspconfig'.eslint.setup{}
+require'lspconfig'.eslint.setup{
+    root_dir = lspconfig.util.root_pattern("yarn.lock", "lerna.json", ".git"),
+}
 
 require'lspconfig'.html.setup{
     cmd = {"html-languageserver", "--stdio"}
@@ -77,23 +83,3 @@ require'lspconfig'.html.setup{
 require'lspconfig'.clangd.setup {
     root_dir = function() return vim.loop.cwd() end
 }
-
-local snippets_paths = function()
-    local plugins = { "friendly-snippets" }
-    local paths = {}
-    local path
-    local root_path = vim.env.HOME .. '/.vim/plugged/'
-    for _, plug in ipairs(plugins) do
-        path = root_path .. plug
-        if vim.fn.isdirectory(path) ~= 0 then
-            table.insert(paths, path)
-        end
-    end
-    return paths
-end
-
-require("luasnip/loaders/from_vscode").lazy_load({
-    paths = snippets_paths(),
-    include = nil,  -- Load all languages
-    exclude = {}
-})

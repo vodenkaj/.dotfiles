@@ -20,3 +20,12 @@ set signcolumn=yes
 set cmdheight=2
 set updatetime=50
 set cursorline
+
+set path+=**
+
+set wildmode=longest,list,full
+set wildmenu
+
+set wildignore+=**/node_modules/*
+set wildignore+=**/.git/*
+set clipboard+=unnamed
