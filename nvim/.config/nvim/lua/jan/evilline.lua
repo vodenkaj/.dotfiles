@@ -18,25 +18,6 @@ local colors = {
     red = '#ec5f67'
 }
 
-
-local function lsp_status(status)
-    shorter_stat = ''
-    for match in string.gmatch(status, "[^%s]+")  do
-        err_warn = string.find(match, "^[WE]%d+", 0)
-        if not err_warn then
-            shorter_stat = shorter_stat .. ' ' .. match
-        end
-    end
-    return shorter_stat
-end
-
-function get_diagnostic_info()
-  if vim.fn.exists('*coc#rpc#start_server') == 1 then
-    return lsp_status(vim.fn['coc#status']())
-    end
-  return ''
-end
-
 local checkwidth = function()
   local squeeze_width  = vim.fn.winwidth(0) / 2
   if squeeze_width > 40 then
@@ -136,21 +117,21 @@ gls.left[9] = {
   DiffRemove = {
     provider = 'DiffRemove',
     condition = checkwidth,
-    icon = '',
+    icon = ' ',
     highlight = {colors.red,colors.line_bg},
   }
 }
-gls.left[11] = {
+gls.left[10] = {
   DiagnosticError = {
     provider = 'DiagnosticError',
     icon = ' ',
-    highlight = {colors.red,colors.bg}
+    highlight = {colors.red,colors.line_bg}
   }
 }
-gls.left[13] = {
+gls.left[11] = {
   DiagnosticWarn = {
     provider = 'DiagnosticWarn',
     icon = '   ',
-    highlight = {colors.yellow,colors.bg},
+    highlight = {colors.yellow,colors.line_bg},
   }
 }

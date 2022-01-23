@@ -1,7 +1,5 @@
 call plug#begin('~/.vim/plugged')
 
-Plug 'ajh17/Spacegray.vim'
-
 " LSP
 Plug 'neovim/nvim-lspconfig'
 Plug 'ray-x/lsp_signature.nvim'
@@ -37,7 +35,7 @@ Plug 'tpope/vim-surround'
 Plug 'ThePrimeagen/harpoon'
 
 "Galaxy Line
-Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
+Plug 'vodenkaj/galaxyline.nvim' , {'branch': 'main'}
 Plug 'kyazdani42/nvim-web-devicons'
 
 " Nerd Tree
@@ -46,17 +44,12 @@ Plug 'preservim/nerdtree'
 Plug 'mhinz/vim-startify'
 
 Plug 'lewis6991/gitsigns.nvim'
+Plug 'sbdchd/neoformat'
+Plug 'RRethy/vim-illuminate'
 
 call plug#end()
 
 colorscheme spacegray
-highlight normal guibg=none
-hi clear LineNr
-hi clear SignColumn
-let g:spacegray_low_contrast = 1
-
-lua require("jan")
-lua require'nvim-treesitter.configs'.setup { ensure_installed = {"javascript"}, indent = { enable = true }, highlight = { enable = true }, incremental_selection = { enable = true }, textobjects = { enable = true }}
 
 nnoremap <SPACE> <Nop>
 let mapleader = " "
@@ -65,15 +58,10 @@ nnoremap <leader>y "+y
 vnoremap <leader>y "+y
 nnoremap <leader>Y gg "+yG
 
-fun! EmptyRegisters()
-    let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
-    for r in regs
-        call setreg(r, [])
-    endfor
-endfun
+lua require("jan")
 
 augroup onBuf
     autocmd!
     autocmd BufWritePre * %s/\s\+$//e
-    au BufNewFile,BufRead *.ejs set filetype=html
+    autocmd BufNewFile,BufRead *.ejs set filetype=html
 augroup END

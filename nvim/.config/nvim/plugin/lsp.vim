@@ -10,18 +10,8 @@ nnoremap <leader>vsd :Lspsaga show_line_diagnostics<CR>
 nnoremap <leader>vn :Lspsaga diagnostic_jump_next<CR>
 nnoremap <leader>vp :Lspsaga diagnostic_jump_prev<CR>
 
-"augroup LSP
-"    autocmd!
-"    autocmd BufWritePre *.ts lua vim.lsp.buf.formatting_sync(nil, 1000)
-"    autocmd BufWritePre *.js lua vim.lsp.buf.formatting_sync(nil, 1000)
-"    autocmd BufWritePre *.tsx lua vim.lsp.buf.formatting_sync(nil, 1000)
-"    autocmd BufWritePre *.jsx lua vim.lsp.buf.formatting_sync(nil, 1000)
-"augroup END
-
 augroup LSP
     autocmd!
-    autocmd BufWritePre *.ts :EslintFixAll
-    autocmd BufWritePre *.js :EslintFixAll
-    autocmd BufWritePre *.tsx :EslintFixAll
-    autocmd BufWritePre *.jsx :EslintFixAll
+    autocmd BufWritePre *.ts,*.tsx,*.js,*.jsx :EslintFixAll
+    autocmd BufWritePre *.cpp,*.h :Neoformat
 augroup END
