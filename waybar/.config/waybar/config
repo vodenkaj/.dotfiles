@@ -1,0 +1,67 @@
+{
+  "layer": "top",
+  "height": 24,
+  "modules-left": ["sway/workspaces", "sway/mode"],
+  "modules-center": ["sway/window"],
+  "modules-right": [
+    "cpu",
+    "memory",
+    "network",
+    "pulseaudio",
+    "battery",
+    "clock"
+  ],
+
+  "sway/mode": {
+    "tooltip": false,
+    "format": {}
+  },
+
+  "tray": {
+    "icon-size": 21,
+    "spacing": 10
+  },
+
+  "battery": {
+    "interval": 60,
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon}",
+    "format-icons": ["", "", "", "", ""]
+  },
+
+  "pulseaudio": {
+    "format": "{icon}",
+    "format-muted": "婢",
+    "format-icons": {
+      "headphones": "",
+      "default": ["", "", ""]
+    },
+    "scroll-step": 5,
+    "on-click-right": "pamixer -t",
+    "on-click": "pavucontrol"
+  },
+  "clock": {
+    "format": "{: %R}",
+    "interval": 30
+  },
+  "cpu": {
+    "interval": 2,
+    "format": "{usage}%"
+  },
+  "memory": {
+    "format": "{}%"
+  },
+  "network": {
+    "format": "{ifname}",
+    "format-wifi": [""],
+    "format-ethernet": "",
+    "format-disconnected": "睊",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+    "tooltip-format-ethernet": "{ifname}",
+    "on-click": "nm-connection-editor",
+    "interval": 60
+  }
+}

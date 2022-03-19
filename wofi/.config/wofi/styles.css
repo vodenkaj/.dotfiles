@@ -1,0 +1,22 @@
+*:focus {
+    outline: none;
+}
+
+#window {
+    color: white;
+    background-color: #282828
+}
+
+#outer-box {
+    padding: 10;
+}
+
+#input {
+    background-color: none;
+    border: none;
+    margin-bottom: 10px;
+}
+
+#entry:selected {
+    background-color: #d65d0e
+}
