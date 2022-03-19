@@ -7,17 +7,24 @@ Plug 'onsails/lspkind-nvim'
 
 " Completion
 Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'ray-x/cmp-treesitter'
+Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz1/cmp_luasnip'
 
 " Treesitter stuff
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
 
+Plug 'ibhagwan/fzf-lua'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 "Plug 'mattn/efm-langserver'
 
 " Bracket lines
-Plug 'Yggdroot/indentLine'
+Plug 'lukas-reineke/indent-blankline.nvim'
 
 " LSPSaga code action fix
 Plug 'tami5/lspsaga.nvim', { 'branch': 'nvim6.0' }
@@ -36,15 +43,16 @@ Plug 'ThePrimeagen/harpoon'
 
 "Galaxy Line
 Plug 'vodenkaj/galaxyline.nvim' , {'branch': 'main'}
-Plug 'kyazdani42/nvim-web-devicons'
 
-" Nerd Tree
-Plug 'preservim/nerdtree'
+" Nvim Tree
+Plug 'kyazdani42/nvim-tree.lua'
+Plug 'kyazdani42/nvim-web-devicons'
 
 Plug 'mhinz/vim-startify'
 
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'sbdchd/neoformat'
+Plug 'lilydjwg/colorizer'
 Plug 'RRethy/vim-illuminate'
 
 call plug#end()

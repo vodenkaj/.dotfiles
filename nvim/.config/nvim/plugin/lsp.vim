@@ -13,5 +13,5 @@ nnoremap <leader>vp :Lspsaga diagnostic_jump_prev<CR>
 augroup LSP
     autocmd!
     autocmd BufWritePre *.ts,*.tsx,*.js,*.jsx :EslintFixAll
-    autocmd BufWritePre *.cpp,*.h :Neoformat
+    autocmd BufWritePre *.scss,*.cpp,*.h :Neoformat
 augroup END

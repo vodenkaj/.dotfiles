@@ -1,7 +1,7 @@
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
+nnoremap <leader>n :NvimTreeFocus<CR>
+nnoremap <C-n> :NvimTreeOpen<CR>
+nnoremap <C-t> :NvimTreeToggle<CR>
+nnoremap <C-f> :NvimTreeFindFile<CR>
 
 function IgnoreFiles()
     let g:NERDTreeIgnore = ['\.csproj', 'Logs', 'Models',

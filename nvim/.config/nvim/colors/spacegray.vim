@@ -147,7 +147,6 @@ hi link GitSignsDelete        Function
 
 " TS Groups
 hi link TSParameter           Normal
-hi link TSProperty            Normal
 
 if (has('terminal') && has('termguicolors')) || has('gui_running')
   let g:terminal_ansi_colors = [

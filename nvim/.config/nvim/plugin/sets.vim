@@ -29,3 +29,6 @@ set wildmenu
 set wildignore+=**/node_modules/*
 set wildignore+=**/.git/*
 set clipboard+=unnamed
+
+" for parcel hot load to work
+set backupcopy=yes
