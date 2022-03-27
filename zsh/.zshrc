@@ -1,8 +1,16 @@
+export SYSTEMD_EDITOR=nvim
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+export ZSH="/home/janv/.oh-my-zsh"
+
+# Default editor
+ export VISUAL=nvim;
+ export EDITOR=nvim;
+
+# Yarn path
+export PATH="$(yarn global bin):$PATH"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -65,18 +73,24 @@ ZSH_THEME="robbyrussell"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
 
-alias nv="nvim"
+bindkey "^[[Z" autosuggest-accept
+bindkey -M viins '^[[Z' autosuggest-accept
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -101,3 +115,9 @@ alias nv="nvim"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+#
+alias ncfg='cd /home/janv/.dotfiles/nvim/.config/nvim'
+alias nv='nvim'
+alias rng='ranger'
+
+source /usr/share/nvm/init-nvm.sh
