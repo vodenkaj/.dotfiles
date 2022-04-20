@@ -30,5 +30,6 @@ set wildignore+=**/node_modules/*
 set wildignore+=**/.git/*
 set clipboard+=unnamed
 
+set diffopt+=vertical
 " for parcel hot load to work
 set backupcopy=yes

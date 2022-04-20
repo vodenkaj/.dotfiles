@@ -15,6 +15,9 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 lspconfig.tsserver.setup{
     capabilities = capabilities,
     root_dir = lspconfig.util.root_pattern("yarn.lock", "lerna.json", ".git"),
+    init_options = {
+        maxTsServerMemory = "4096",
+    }
 }
 
 

@@ -34,7 +34,7 @@
 
   "pulseaudio": {
     "format": "{icon}",
-    "format-muted": "婢",
+    "format-muted": "",
     "format-icons": {
       "headphones": "",
       "default": ["", "", ""]
@@ -45,23 +45,23 @@
   },
   "clock": {
     "format": "{: %R}",
-    "interval": 30
+    "interval": 30,
+    "tooltip-format": "{:%D}"
   },
   "cpu": {
     "interval": 2,
-    "format": "{usage}%"
+    "format": "CPU {usage}%"
   },
   "memory": {
-    "format": "{}%"
+    "format": "RAM {}%"
   },
   "network": {
-    "format": "{ifname}",
-    "format-wifi": [""],
+    "format-wifi": "",
     "format-ethernet": "",
     "format-disconnected": "睊",
     "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
     "tooltip-format-ethernet": "{ifname}",
-    "on-click": "nm-connection-editor",
+    "on-click": "alacritty -t nmtui -e nmtui",
     "interval": 60
   }
 }

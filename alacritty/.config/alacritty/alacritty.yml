@@ -5,12 +5,12 @@ window:
 
 font:
   normal:
-    family: Consolas
+    family: JetBrainsMono NF
     style: Regular
   bold:
-    family: Consolas
+    family: JetBrainsMono NF
     style: Bold
   italic:
-    family: Consolas
+    family: JetBrainsMono NF
     style: Italic
   size: 12

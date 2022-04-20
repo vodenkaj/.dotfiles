@@ -37,9 +37,12 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 Plug 'ThePrimeagen/git-worktree.nvim'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
 
 " Harpoon
 Plug 'ThePrimeagen/harpoon'
+
+Plug 'NTBBloodbath/rest.nvim'
 
 "Galaxy Line
 Plug 'vodenkaj/galaxyline.nvim' , {'branch': 'main'}
@@ -54,6 +57,10 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'sbdchd/neoformat'
 Plug 'lilydjwg/colorizer'
 Plug 'RRethy/vim-illuminate'
+
+" Markdown
+Plug 'godlygeek/tabular'
+Plug 'preservim/vim-markdown'
 
 call plug#end()
 

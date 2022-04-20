@@ -92,6 +92,15 @@ bindkey "^X^E" edit-command-line
 bindkey "^[[Z" autosuggest-accept
 bindkey -M viins '^[[Z' autosuggest-accept
 
+tmxSession () {
+    selected=$(find ~/Documents/work -maxdepth 1 -mindepth 1 -type d | fzf)
+    selected_name=$(basename "$selected" | tr . _)
+    tmux new-session -s $selected_name -c ${selected}
+}
+
+bindkey -s ^N "tmxSession\n"
+bindkey -s ^F "nvfzf\n"
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -118,6 +127,15 @@ bindkey -M viins '^[[Z' autosuggest-accept
 #
 alias ncfg='cd /home/janv/.dotfiles/nvim/.config/nvim'
 alias nv='nvim'
+alias nvfzf='nvim $(fzf)'
 alias rng='ranger'
+alias lrb="lerna run build"
 
-source /usr/share/nvm/init-nvm.sh
+# work
+alias GAC0='GOOGLE_APPLICATION_CREDENTIALS=$HOME/Documents/work/reas-services/.credentials/local.example.json'
+alias GAC1='GOOGLE_APPLICATION_CREDENTIALS=$HOME/Documents/work/reas-services/.credentials/me.json'
+export FZF_DEFAULT_COMMAND='ag -g ""'
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
