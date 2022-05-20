@@ -18,6 +18,11 @@ output HDMI-A-1 pos 0 0 res 1920x1080
 
 bar swaybar_command waybar
 
+# For GTK apps
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec hash dbus-update-activation-environment 2>/dev/null && \
+     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+
 # Window config
 default_border pixel
 gaps inner 10
@@ -157,14 +162,9 @@ for_window [title=^Volume\sControl$] floating enable
     bindsym $mod+minus scratchpad show#
 
     input type:keyboard {
-        xkb_layout us,cz
-        xkb_options grp:rctrl_toggle
+        xkb_layout custom
     }
 
-    input type:keyboard {
-        xkb_layout us,us(dvp)
-        xkb_options grp:toggle
-    }
 #
 # Resizing containers:
 #

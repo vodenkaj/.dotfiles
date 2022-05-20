@@ -12,7 +12,8 @@ require("telescope").setup{
         file_ignore_patterns = {
             "node_modules",
             "build",
-            "dist"
+            "dist",
+            "fixtures"
         },
         layout_strategy = "vertical",
         layout_config = {
@@ -24,6 +25,17 @@ require("telescope").setup{
         initial_mode = "insert",
         selection_strategy = "reset",
         sorting_strategy = "descending",
+        treesitter = true,
+        mappings = {
+            n = {
+            ["<Tab>"] = require("telescope.actions").move_selection_previous,
+            ["<S-Tab>"] = require("telescope.actions").move_selection_next
+            },
+            i = {
+            ["<Tab>"] = require("telescope.actions").move_selection_previous,
+            ["<S-Tab>"] = require("telescope.actions").move_selection_next
+            },
+        }
     },
     extensions = {
         fzy_native = {

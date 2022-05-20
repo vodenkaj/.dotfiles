@@ -1,0 +1,4 @@
+xkb_symbols {
+    include "pc+us+us(dvp):2+cz:3+inet(evdev)+group(rctrl_toggle)"
+    key <CAPS> { [ BackSpace, BackSpace ]};
+};
