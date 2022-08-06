@@ -13,22 +13,22 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'ray-x/cmp-treesitter'
 Plug 'L3MON4D3/LuaSnip'
-Plug 'saadparwaiz1/cmp_luasnip'
+" Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'kristijanhusak/vim-dadbod-completion'
+
+" DB
+Plug 'tpope/vim-dadbod'
+Plug 'kristijanhusak/vim-dadbod-ui'
 
 " Treesitter stuff
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
 
-Plug 'ibhagwan/fzf-lua'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-"Plug 'mattn/efm-langserver'
-
 " Bracket lines
 Plug 'lukas-reineke/indent-blankline.nvim'
 
 " LSPSaga code action fix
-Plug 'tami5/lspsaga.nvim', { 'branch': 'nvim6.0' }
-Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
+Plug 'stevearc/dressing.nvim'
 
 Plug 'windwp/nvim-autopairs'
 
@@ -42,7 +42,7 @@ Plug 'tpope/vim-fugitive'
 " Harpoon
 Plug 'ThePrimeagen/harpoon'
 
-Plug 'NTBBloodbath/rest.nvim'
+Plug 'NTBBloodbath/rest.nvim', {'commit': 'e5f68db73276c4d4d255f75a77bbe6eff7a476ef'}
 
 "Galaxy Line
 Plug 'vodenkaj/galaxyline.nvim' , {'branch': 'main'}
@@ -57,6 +57,7 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'sbdchd/neoformat'
 Plug 'lilydjwg/colorizer'
 Plug 'RRethy/vim-illuminate'
+Plug 'chrisbra/csv.vim'
 
 call plug#end()
 
@@ -81,3 +82,5 @@ augroup onBuf
     autocmd BufWritePre * %s/\s\+$//e
     autocmd BufNewFile,BufRead *.ejs set filetype=html
 augroup END
+
+command BufOnly silent! execute "%bd|e#|bd#"

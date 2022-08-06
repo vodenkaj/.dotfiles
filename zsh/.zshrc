@@ -6,8 +6,8 @@ export SYSTEMD_EDITOR=nvim
 export ZSH="/home/janv/.oh-my-zsh"
 
 # Default editor
- export VISUAL=nvim;
- export EDITOR=nvim;
+export VISUAL=nvim;
+export EDITOR=nvim;
 
 # Yarn path
 export PATH="$(yarn global bin):$PATH"
@@ -85,21 +85,47 @@ plugins=(git zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-autoload -z edit-command-line
-zle -N edit-command-line
-bindkey "^X^E" edit-command-line
+autoload -U edit-command-line
+bindkey "^e" edit-command-line
 
 bindkey "^[[Z" autosuggest-accept
 bindkey -M viins '^[[Z' autosuggest-accept
 
+
 tmxSession () {
     selected=$(find ~/Documents/work -maxdepth 1 -mindepth 1 -type d | fzf)
     selected_name=$(basename "$selected" | tr . _)
-    tmux new-session -s $selected_name -c ${selected}
+    if ! tmux has -t=$selected_name; then
+        tmux new -d -s $selected_name -c ${selected}
+        tmxAttachOrSwitch $selected_name
+    else
+        tmxAttachOrSwitch $selected_name
+    fi
+}
+
+tmxDb () {
+    if ! tmux has -t=db 2>/dev/null; then
+        tmux new -d -s db
+        tmux send-keys -t db.0 "nv -c ':DBUIToggle'"  ENTER
+        tmxAttachOrSwitch db
+    else
+        tmxAttachOrSwitch db
+    fi
+}
+
+tmxAttachOrSwitch () {
+    if [ -z "$TMUX" ]; then
+        tmux a -t "$1"
+    else
+        tmux switch-client -t "$1"
+    fi
 }
 
 bindkey -s ^N "tmxSession\n"
 bindkey -s ^F "nvfzf\n"
+
+alias db="tmxDb"
+
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -127,14 +153,36 @@ bindkey -s ^F "nvfzf\n"
 #
 alias ncfg='cd /home/janv/.dotfiles/nvim/.config/nvim'
 alias nv='nvim'
-alias nvfzf='nvim $(fzf)'
+alias nvfzf='fzfToVim'
 alias rng='ranger'
 alias lrb="lerna run build"
+
+fzfToVim() {
+    file=$(fzf)
+    if [ -n "$file" ]; then
+        nvim "$file"
+    fi
+}
+
+# git
+alias gap='git add -p'
+alias gp='git push --force-with-lease'
+alias gc='gitSmartCheckout'
+alias gs='git status'
+
+gitSmartCheckout() {
+    git checkout "$1" 2>/dev/null || git checkout -b "$1"
+}
 
 # work
 alias GAC0='GOOGLE_APPLICATION_CREDENTIALS=$HOME/Documents/work/reas-services/.credentials/local.example.json'
 alias GAC1='GOOGLE_APPLICATION_CREDENTIALS=$HOME/Documents/work/reas-services/.credentials/me.json'
+
 export FZF_DEFAULT_COMMAND='ag -g ""'
+export FZF_DEFAULT_OPTS='--bind tab:toggle-up,btab:toggle-down'
+alias cfg='nv $HOME/Documents/work/reas-services/packages/config/src/index.ts'
+
+export VIMRC='/home/janv/.dotfiles/nvim/.config/nvim/init.vim';
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

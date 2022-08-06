@@ -1,10 +1,10 @@
-require'nvim-tree'.setup{
+require "nvim-tree".setup {
     view = {
         mappings = {
             custom_only = false,
             list = {
-                { key = "<C-t>", action = "" },
-                { key = "s", action = "" },
+                {key = "<C-t>", action = ""},
+                {key = "s", action = ""}
             }
         }
     }

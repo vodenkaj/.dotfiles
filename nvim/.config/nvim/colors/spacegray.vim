@@ -145,6 +145,9 @@ hi link GitSignsAdd           String
 hi link GitSignsChange        DiffChange
 hi link GitSignsDelete        Function
 
+" Dressing
+hi link FloatTitle  Special
+
 " TS Groups
 hi link TSParameter           Normal
 

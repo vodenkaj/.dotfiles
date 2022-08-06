@@ -1,4 +1,17 @@
 xkb_symbols {
-    include "pc+us+us(dvp):2+cz:3+inet(evdev)+group(rctrl_toggle)"
+    include "pc+us(dvp)+us:2+inet(evdev)+group(rctrl_toggle)"
     key <CAPS> { [ BackSpace, BackSpace ]};
+    key <TLDE> { [ dollar,       asciitilde] };
+    key <AE01> { [ ampersand,    1] };
+    key <AE02> { [ bracketleft,  2] };
+    key <AE03> { [ braceleft,    3] };
+    key <AE04> { [ braceright,   4] };
+    key <AE05> { [ parenleft,    5] };
+    key <AE06> { [ equal,        6] };
+    key <AE07> { [ asterisk,     7] };
+    key <AE08> { [ parenright,   8] };
+    key <AE09> { [ plus,         9] };
+    key <AE10> { [ bracketright, 0] };
+    key <AE11> { [ exclam,       percent] };
+    key <AE12> { [ numbersign,   grave] };
 };
