@@ -1,6 +1,10 @@
 #!/bin/zsh
 
-pushd $DOTFILES
+pushd "$HOME/.dotfiles"
+
+if ! [[ $(pwd) =~ ".dotfiles"$ ]]; then
+    exit
+fi
 
 # Oh-my-zsh
 if [[ ! -d "$ZSH" ]]; then
@@ -8,16 +12,13 @@ if [[ ! -d "$ZSH" ]]; then
     rm $HOME/.zshrc
 fi
 
-# Vim-plug
-if [[ ! -f "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim ]]; then
-    sh -c "curl -fLo '${XDG_DATA_HOME:-$HOME/.local/share}'/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-fi
+FOLDERS=($(ls -d */))
+IGNORE=("bin")
 
-homeFolders=("mako" "nvim" "sway" "waybar" "wofi" "zsh" "alacritty" "tmux" "fontconfig" "profile")
-
-for folder in ${homeFolders[@]}
-do
-    stow -R $folder
+for folder in ${FOLDERS[@]}; do
+    if [[ ! " ${IGNORE[*]} " =~ " ${folder} " ]]; then
+        stow -R $folder
+    fi
 done
 
-popd
+sudo stow -t /usr/local/bin/ -R bin

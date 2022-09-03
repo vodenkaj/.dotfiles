@@ -1,0 +1,14 @@
+#!/bin/zsh
+
+if [ -z "$1" ]; then;
+    echo "You need to provide a name of the image"
+    exit
+fi
+
+FILE="$(pwd)/$1"
+if ! [ -f "$FILE" ]; then
+    echo "Image does not exist"
+    exit
+fi
+
+sudo ln -sf $FILE /usr/share/wallpaper.png

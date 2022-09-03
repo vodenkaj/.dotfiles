@@ -5,7 +5,7 @@ local lspkind = require "lspkind"
 cmp.setup(
     {
         completion = {
-            completeopt = "menu,noinsert"
+            completeopt = "menu"
         },
         snippet = {
             expand = function(args)

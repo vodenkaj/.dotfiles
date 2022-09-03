@@ -155,7 +155,6 @@ alias ncfg='cd /home/janv/.dotfiles/nvim/.config/nvim'
 alias nv='nvim'
 alias nvfzf='fzfToVim'
 alias rng='ranger'
-alias lrb="lerna run build"
 
 fzfToVim() {
     file=$(fzf)
@@ -174,16 +173,15 @@ gitSmartCheckout() {
     git checkout "$1" 2>/dev/null || git checkout -b "$1"
 }
 
-# work
-alias GAC0='GOOGLE_APPLICATION_CREDENTIALS=$HOME/Documents/work/reas-services/.credentials/local.example.json'
-alias GAC1='GOOGLE_APPLICATION_CREDENTIALS=$HOME/Documents/work/reas-services/.credentials/me.json'
-
 export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_DEFAULT_OPTS='--bind tab:toggle-up,btab:toggle-down'
-alias cfg='nv $HOME/Documents/work/reas-services/packages/config/src/index.ts'
 
-export VIMRC='/home/janv/.dotfiles/nvim/.config/nvim/init.vim';
+export VIMRC='/home/janv/.config/nvim/init.lua';
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+if [ -f "$HOME/.work" ]; then
+    source ".work"
+fi

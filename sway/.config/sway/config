@@ -8,20 +8,14 @@ set $term $TERM
 set $menu wofi --style $HOME/.config/wofi/styles.css --config $HOME/.config/wofi/config
 set $web firefox
 
-# Wallpaper
-output * bg /usr/share/default-bg.png fill
-
 # Display config
 output Virtual-1 pos 0 0 res 1920x1080
 output eDP-1 pos 0 1080 res 1920x1080
 output HDMI-A-1 pos 0 0 res 1920x1080
 
-bar swaybar_command waybar
+output * bg /usr/share/wallpaper.png fill #111111
 
-# For GTK apps
-exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
-exec hash dbus-update-activation-environment 2>/dev/null && \
-     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+bar swaybar_command waybar
 
 # Window config
 default_border pixel
@@ -72,7 +66,7 @@ for_window [title=^Volume\sControl$] floating enable
     bindsym --locked XF86MonBrightnessUp exec --no-startup-id light -A 10
     bindsym --locked XF86MonBrightnessDown exec --no-startup-id light -U 10
 
-    bindsym $mod+0 exec swaylock --image /usr/share/default-bg.png
+    bindsym $mod+0 exec swaylock --image /usr/share/wallpaper.png
 
     bindsym Print exec flameshot gui --raw | wl-copy
 
@@ -192,5 +186,3 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 bindsym $mod+r mode "resize"
-
-include /etc/sway/config.d/*
