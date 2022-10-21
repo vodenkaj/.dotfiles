@@ -1,3 +1,5 @@
+require("harpoon").setup()
+
 vim.keymap.set("n", "<leader>a",
                function() require('harpoon.mark').add_file() end,
                {silent = true})

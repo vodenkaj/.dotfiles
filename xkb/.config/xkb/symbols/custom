@@ -1,5 +1,5 @@
 xkb_symbols {
-    include "pc+us(dvp)+us:2+inet(evdev)+group(rctrl_toggle)"
+    include "pc+us(dvp)+us:2+inet(evdev)"
     key <CAPS> { [ BackSpace, BackSpace ]};
     key <TLDE> { [ dollar,       asciitilde] };
     key <AE01> { [ ampersand,    1] };

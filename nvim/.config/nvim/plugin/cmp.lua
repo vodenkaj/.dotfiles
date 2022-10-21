@@ -20,7 +20,7 @@ cmp.setup(
             ["<C-f>"] = cmp.mapping.scroll_docs(4),
             ["<C-Space>"] = cmp.mapping.complete(),
             ["<C-e>"] = cmp.mapping.close(),
-            ["<CR>"] = cmp.mapping.confirm({select = true, behavior = cmp.ConfirmBehavior.Replace}),
+            ["<CR>"] = cmp.mapping.confirm({select = true}),
             ["<Tab>"] = function(fallback)
                 if cmp.visible() then
                     cmp.select_next_item()
@@ -43,7 +43,6 @@ cmp.setup(
         sources = cmp.config.sources(
             {
                 {name = "nvim_lsp"},
-                {name = "vim-dadbod-completion"},
                 {name = "buffer"},
                 {name = "luasnip"}
             }

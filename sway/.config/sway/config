@@ -68,7 +68,7 @@ for_window [title=^Volume\sControl$] floating enable
 
     bindsym $mod+0 exec swaylock --image /usr/share/wallpaper.png
 
-    bindsym Print exec flameshot gui --raw | wl-copy
+#    bindsym Print exec flameshot gui --raw | wl-copy
 
 #
 # Moving around:
@@ -186,3 +186,5 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 bindsym $mod+r mode "resize"
+
+include /etc/sway/config.d/*
