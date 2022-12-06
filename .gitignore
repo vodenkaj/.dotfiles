@@ -1,2 +1,5 @@
 packer_compiled.lua
 .work
+scripts/
+vifm-help.txt
+vifminfo.json

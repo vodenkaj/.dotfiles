@@ -1,0 +1,19 @@
+colorscheme papercolor-dark
+view
+set vicmd=nvim
+
+" Syntax highlighting in preview
+"
+" Explicitly set highlight type for some extensions
+"
+" 256-color terminal
+" fileviewer *.[ch],*.[ch]pp,*.py highlight -O xterm256 -s dante --syntax c %c
+fileviewer *.py highlight -O xterm256 --syntax python
+fileviewer *.rs highlight -O xterm256 --syntax rust
+fileviewer *.json highlight -O xterm256 --syntax json
+fileviewer *.xml highlight -O xterm256 --syntax xml
+fileviewer *.xhtml highlight -O xterm256 --syntax html
+fileviewer *.opf highlight -O xterm256 --syntax xml
+fileviewer *.md highlight -O xterm256 --syntax markdown
+" fileviewer Makefile,Makefile.* highlight -O xterm256 -s dante --syntax make %c
+fileviewer *.html,*.go,*.css,*.c highlight -O xterm256 -s dante %c

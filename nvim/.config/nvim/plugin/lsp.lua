@@ -70,3 +70,5 @@ lspconfig.sumneko_lua.setup {
 lspconfig.prismals.setup {capablities = capabilities}
 
 lspconfig.sqls.setup {capablities = capabilities}
+
+require'lspconfig'.rust_analyzer.setup{}

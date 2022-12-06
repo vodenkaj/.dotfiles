@@ -10,7 +10,7 @@ export VISUAL=nvim;
 export EDITOR=nvim;
 
 # Yarn path
-export PATH="$(yarn global bin):$PATH"
+export PATH="$(yarn global bin):$PATH:/home/janv/.cargo/bin"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -93,7 +93,7 @@ bindkey -M viins '^[[Z' autosuggest-accept
 
 
 tmxSession () {
-    selected=$(find ~/Documents/work -maxdepth 1 -mindepth 1 -type d | fzf)
+    selected=$(find ~/Documents -maxdepth 2 -mindepth 2 -type d | fzf)
     selected_name=$(basename "$selected" | tr . _)
     if ! tmux has -t=$selected_name; then
         tmux new -d -s $selected_name -c ${selected}
@@ -154,7 +154,7 @@ alias db="tmxDb"
 alias ncfg='cd /home/janv/.dotfiles/nvim/.config/nvim'
 alias nv='nvim'
 alias nvfzf='fzfToVim'
-alias rng='ranger'
+alias rng='vifm'
 
 fzfToVim() {
     file=$(fzf)

@@ -41,5 +41,6 @@ return require("packer").startup(
         use("rcarriga/nvim-dap-ui")
         use("akinsho/toggleterm.nvim")
         use("rcarriga/nvim-notify")
+        use("rest-nvim/rest.nvim")
     end
 )
