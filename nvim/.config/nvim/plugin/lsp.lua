@@ -1,7 +1,7 @@
 local lspconfig = require "lspconfig"
 local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp
-                                                                     .protocol
-                                                                     .make_client_capabilities())
+                                                                      .protocol
+                                                                      .make_client_capabilities())
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
     vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
@@ -28,7 +28,11 @@ end
 lspconfig.tsserver.setup {
     capabilities = capabilities,
     root_dir = lspconfig.util.root_pattern(".git"),
-    init_options = {maxTsServerMemory = "4096",  update_insert_text = false, disableAutomaticTypingAcquisition = true },
+    init_options = {
+        maxTsServerMemory = "4096",
+        update_insert_text = false,
+        disableAutomaticTypingAcquisition = true
+    }
 }
 
 lspconfig.eslint.setup {
@@ -71,4 +75,4 @@ lspconfig.prismals.setup {capablities = capabilities}
 
 lspconfig.sqls.setup {capablities = capabilities}
 
-require'lspconfig'.rust_analyzer.setup{}
+require'lspconfig'.rust_analyzer.setup {}

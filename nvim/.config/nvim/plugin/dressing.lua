@@ -22,11 +22,12 @@ require("dressing").setup({
         -- min_width = {20, 0.2} means "the greater of 20 columns or 20% of total"
         max_width = {140, 0.9},
         min_width = {20, 0.2},
-        -- Window transparency (0-100)
-        winblend = 10,
-        -- Change default highlight groups (see :help winhl)
-        winhighlight = "",
-        -- Set to `false` to disable
+        win_options = {
+            -- Window transparency (0-100)
+            winblend = 10,
+            -- Disable line wrapping
+            wrap = false
+        }, -- Set to `false` to disable
         mappings = {
             n = {["<Esc>"] = "Close", ["<CR>"] = "Confirm"},
             i = {
@@ -59,10 +60,6 @@ require("dressing").setup({
             border = "rounded",
             -- 'editor' and 'win' will default to being centered
             relative = "editor",
-            -- Window transparency (0-100)
-            winblend = 10,
-            -- Change default highlight groups (see :help winhl)
-            winhighlight = "",
             -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
             -- the min_ and max_ options can be a list of mixed types.
             -- max_width = {140, 0.8} means "the lesser of 140 columns or 80% of total"
