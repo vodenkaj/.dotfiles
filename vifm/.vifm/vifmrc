@@ -1,6 +1,8 @@
 colorscheme papercolor-dark
 view
 set vicmd=nvim
+set rnu
+windo normal zo
 
 " Syntax highlighting in preview
 "
