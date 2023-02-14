@@ -5,7 +5,7 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
     vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
-                 {virtual_text = false, underline = true, signs = true})
+                 {virtual_text = true, underline = true, signs = true})
 
 -- Maps
 vim.keymap.set("n", "<leader>vd", vim.lsp.buf.definition)
@@ -50,7 +50,7 @@ lspconfig.cssls.setup {
     cmd = {"vscode-css-language-server", "--stdio"}
 }
 
-lspconfig.sumneko_lua.setup {
+lspconfig.lua_ls.setup {
     settings = {
         Lua = {
             runtime = {
@@ -75,4 +75,4 @@ lspconfig.prismals.setup {capablities = capabilities}
 
 lspconfig.sqls.setup {capablities = capabilities}
 
-require'lspconfig'.rust_analyzer.setup {}
+lspconfig.rust_analyzer.setup {capablities = capabilities}

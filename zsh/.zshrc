@@ -83,6 +83,7 @@ ZSH_THEME="robbyrussell"
 plugins=(git zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
+source $HOME/scripts.sh
 
 # User configuration
 autoload -U edit-command-line
@@ -91,41 +92,8 @@ bindkey "^e" edit-command-line
 bindkey "^[[Z" autosuggest-accept
 bindkey -M viins '^[[Z' autosuggest-accept
 
-
-tmxSession () {
-    selected=$(find ~/Documents -maxdepth 2 -mindepth 2 -type d | fzf)
-    selected_name=$(basename "$selected" | tr . _)
-    if ! tmux has -t=$selected_name; then
-        tmux new -d -s $selected_name -c ${selected}
-        tmxAttachOrSwitch $selected_name
-    else
-        tmxAttachOrSwitch $selected_name
-    fi
-}
-
-tmxDb () {
-    if ! tmux has -t=db 2>/dev/null; then
-        tmux new -d -s db
-        tmux send-keys -t db.0 "nv -c ':DBUIToggle'"  ENTER
-        tmxAttachOrSwitch db
-    else
-        tmxAttachOrSwitch db
-    fi
-}
-
-tmxAttachOrSwitch () {
-    if [ -z "$TMUX" ]; then
-        tmux a -t "$1"
-    else
-        tmux switch-client -t "$1"
-    fi
-}
-
 bindkey -s ^N "tmxSession\n"
 bindkey -s ^F "nvfzf\n"
-
-alias db="tmxDb"
-
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -156,22 +124,12 @@ alias nv='nvim'
 alias nvfzf='fzfToVim'
 alias rng='vifm'
 
-fzfToVim() {
-    file=$(fzf)
-    if [ -n "$file" ]; then
-        nvim "$file"
-    fi
-}
-
 # git
 alias gap='git add -p'
 alias gp='git push --force-with-lease'
-alias gc='gitSmartCheckout'
+alias gsc='gitSmartCheckout'
 alias gs='git status'
-
-gitSmartCheckout() {
-    git checkout "$1" 2>/dev/null || git checkout -b "$1"
-}
+alias gc='git checkout'
 
 export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_DEFAULT_OPTS='--bind tab:toggle-up,btab:toggle-down'

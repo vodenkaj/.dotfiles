@@ -31,3 +31,4 @@ require("rest-nvim").setup({
 })
 
 vim.keymap.set("n", "<leader>cl", "<Plug>RestNvim<CR>", {silent = true})
+vim.keymap.set("n", "<leader>clp", "<Plug>RestNvimPreview", {silent = true})

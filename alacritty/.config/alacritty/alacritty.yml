@@ -7,15 +7,12 @@ window:
 
 font:
   normal:
-    family: JetBrainsMono NF
+    family: ComicMono
     style: Regular
   bold:
-    family: JetBrainsMono NF
+    family: ComicMono
     style: Bold
-  italic:
-    family: JetBrainsMono NF
-    style: Italic
-  size: 12
+  size: 13
 
 dynamic_title: false
 decorations: none

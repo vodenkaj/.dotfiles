@@ -38,5 +38,10 @@ return require("packer").startup(function(use)
         run = "npm install --legacy-peer-deps && npm run compile"
     }
     use("rcarriga/nvim-dap-ui")
-    use("rest-nvim/rest.nvim")
+    use {"vodenkaj/rest.nvim", branch = "allow-body-only-in-supported-methods"}
+    use 'simrat39/rust-tools.nvim'
+
+    -- Notes
+    use 'epwalsh/obsidian.nvim'
+    use {'preservim/vim-markdown', requires = {'godlygeek/tabular'}}
 end)

@@ -11,7 +11,7 @@ parser_configs.http = {
 require"nvim-treesitter.configs".setup {
     ensure_installed = {
         "typescript", "tsx", "javascript", "http", "cpp", "c_sharp", "prisma",
-        "lua"
+        "lua", "glsl"
     },
     indent = {enable = true},
     incremental_selection = {enable = true},
