@@ -1,6 +1,6 @@
 return require("packer").startup(function(use)
     use("wbthomason/packer.nvim")
-    use("EdenEast/nightfox.nvim")
+    use("catppuccin/nvim")
     use("norcalli/nvim-colorizer.lua")
 
     use("nvim-telescope/telescope.nvim")
@@ -30,6 +30,12 @@ return require("packer").startup(function(use)
     use("sbdchd/neoformat")
     use("mbbill/undotree")
     use("kyazdani42/nvim-tree.lua")
+    use {"vodenkaj/rest.nvim", branch = "allow-body-only-in-supported-methods"}
+    use 'simrat39/rust-tools.nvim'
+    use {"lukas-reineke/indent-blankline.nvim"}
+    use {"folke/which-key.nvim"}
+
+    -- Dap
     use("mfussenegger/nvim-dap")
     use {"mxsdev/nvim-dap-vscode-js", requires = {"mfussenegger/nvim-dap"}}
     use {
@@ -38,8 +44,6 @@ return require("packer").startup(function(use)
         run = "npm install --legacy-peer-deps && npm run compile"
     }
     use("rcarriga/nvim-dap-ui")
-    use {"vodenkaj/rest.nvim", branch = "allow-body-only-in-supported-methods"}
-    use 'simrat39/rust-tools.nvim'
 
     -- Notes
     use 'epwalsh/obsidian.nvim'

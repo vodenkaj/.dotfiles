@@ -76,3 +76,5 @@ lspconfig.prismals.setup {capablities = capabilities}
 lspconfig.sqls.setup {capablities = capabilities}
 
 lspconfig.rust_analyzer.setup {capablities = capabilities}
+
+lspconfig.bashls.setup {capablities = capabilities}

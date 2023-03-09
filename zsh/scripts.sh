@@ -27,7 +27,7 @@ fzfToVim() {
 }
 
 gitSmartCheckout() {
-    selected=$(g branch | sed "s/^\( \|\*\) //gm" | fzf)
+    selected=$(g branch -r | sed "s/^\( \|\*\) //gm" | fzf)
     if [[ ! -z $selected ]]; then
         git checkout $selected
     fi

@@ -26,7 +26,7 @@ vim.opt.backupcopy = "yes"
 
 vim.opt.synmaxcol = 128
 
-vim.cmd [[ colorscheme nightfox ]]
+vim.cmd [[ colorscheme catppuccin ]]
 
 vim.api.nvim_create_autocmd({"BufWritePre"}, {
     pattern = "*",
