@@ -26,9 +26,7 @@ vim.opt.backupcopy = "yes"
 
 vim.opt.synmaxcol = 128
 
-vim.cmd [[ colorscheme catppuccin ]]
-
-vim.api.nvim_create_autocmd({"BufWritePre"}, {
-    pattern = "*",
-    command = "%s/\\s\\+$//e"
-})
+vim.api.nvim_create_autocmd({"BufWritePre"},
+                            {pattern = "*", command = "%s/\\s\\+$//e"})
+vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"},
+                            {pattern = "*.wgsl", command = "set filetype=wgsl"})

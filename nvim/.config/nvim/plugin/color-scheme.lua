@@ -4,9 +4,16 @@ require("catppuccin").setup {
     transparent_background = false,
     no_italic = false,
     no_bold = false,
+    integrations = {
+        treesitter = true,
+        cmp = true,
+        gitsigns = true,
+        nvimtree = true,
+        telescope = true
+    },
     styles = {
-        comments = {},
-        conditionals = {},
+        comments = {"italic"},
+        conditionals = {"italic"},
         loops = {},
         functions = {},
         keywords = {},
@@ -15,16 +22,9 @@ require("catppuccin").setup {
         numbers = {},
         booleans = {},
         properties = {},
-        types = {}
-    },
-    highlight_overrides = {
-        mocha = function(C)
-            return {
-                TabLineSel = {bg = C.pink},
-                CmpBorder = {fg = C.surface2},
-                Pmenu = {bg = C.none},
-                TelescopeBorder = {link = "FloatBorder"}
-            }
-        end
+        types = {},
+        operators = {}
     }
 }
+
+vim.cmd.colorscheme "catppuccin"

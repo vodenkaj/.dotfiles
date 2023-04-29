@@ -1,11 +1,58 @@
-local lspconfig = require "lspconfig"
-local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp
-                                                                      .protocol
-                                                                      .make_client_capabilities())
+local lsp = require('lsp-zero');
+
+lsp.preset("recommended")
+
+lsp.ensure_installed({ 'tsserver', 'rust_analyzer' })
+
+local cmp = require "cmp"
+local lspkind = require "lspkind"
+local cmp_mappings = {
+    ["<C-Space>"] = cmp.mapping.complete(),
+    ["<CR>"] = cmp.mapping.confirm({ select = true }),
+    ["<Tab>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+    ["<S-Tab>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+
+}
+
+lsp.setup_nvim_cmp({
+    mapping = cmp_mappings,
+    formatting = {
+        format = lspkind.cmp_format({
+            mode = 'symbol',
+            with_text = false,     -- do not show text alongside icons
+            maxwidth = 50,         -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+            -- The function below will be called before any actual modifications from lspkind
+            -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+            before = function(entry, vim_item) return vim_item end
+        })
+    }
+})
+
+lsp.configure('lua_ls', { settings = { Lua = { diagnostics = { globals = { 'vim' } } } } })
+lsp.configure('jdtls', {
+    settings = {
+        java = {
+            format = {
+                settings = {
+                    profile = "GoogleStyle",
+                    url = vim.fs.dirname(vim.fs.find({ 'gradlew', '.git' }, { upward = true })[1]) ..
+                        "/java-code-style.xml"
+                }
+            }
+        }
+    }
+})
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] =
     vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics,
-                 {virtual_text = true, underline = true, signs = true})
+        { virtual_text = true, underline = true, signs = true })
+
+-- Signs symbols
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
 
 -- Maps
 vim.keymap.set("n", "<leader>vd", vim.lsp.buf.definition)
@@ -15,66 +62,6 @@ vim.keymap.set("n", "<leader>vh", vim.lsp.buf.hover)
 vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action)
 vim.keymap.set("n", "<leader>vn", vim.diagnostic.goto_next)
 vim.keymap.set("n", "<leader>vp", vim.diagnostic.goto_prev)
+vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
 
--- Signs symbols
-local signs = {Error = " ", Warn = " ", Hint = " ", Info = " "}
-
-for type, icon in pairs(signs) do
-    local hl = "DiagnosticSign" .. type
-    vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = hl})
-end
-
--- Servers
-lspconfig.tsserver.setup {
-    capabilities = capabilities,
-    root_dir = lspconfig.util.root_pattern(".git"),
-    init_options = {
-        maxTsServerMemory = "4096",
-        update_insert_text = false,
-        disableAutomaticTypingAcquisition = true
-    }
-}
-
-lspconfig.eslint.setup {
-    capabilities = capabilities,
-    root_dir = lspconfig.util.root_pattern("yarn.lock", "lerna.json", ".git")
-}
-
-lspconfig.html.setup {
-    capabilities = capabilities,
-    cmd = {"vscode-html-language-server", "--stdio"}
-}
-
-lspconfig.cssls.setup {
-    capabilities = capabilities,
-    cmd = {"vscode-css-language-server", "--stdio"}
-}
-
-lspconfig.lua_ls.setup {
-    settings = {
-        Lua = {
-            runtime = {
-                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                version = "LuaJIT"
-            },
-            diagnostics = {
-                -- Get the language server to recognize the `vim` global
-                globals = {"vim"}
-            },
-            workspace = {
-                -- Make the server aware of Neovim runtime files
-                library = vim.api.nvim_get_runtime_file("", true)
-            },
-            -- Do not send telemetry data containing a randomized but unique identifier
-            telemetry = {enable = false}
-        }
-    }
-}
-
-lspconfig.prismals.setup {capablities = capabilities}
-
-lspconfig.sqls.setup {capablities = capabilities}
-
-lspconfig.rust_analyzer.setup {capablities = capabilities}
-
-lspconfig.bashls.setup {capablities = capabilities}
+lsp.setup();

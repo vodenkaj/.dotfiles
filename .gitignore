@@ -3,3 +3,4 @@ packer_compiled.lua
 scripts/
 vifm-help.txt
 vifminfo.json
+tmux/.config/tmux/plugins
