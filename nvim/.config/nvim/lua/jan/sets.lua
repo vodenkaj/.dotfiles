@@ -8,7 +8,7 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.undodir = "~/.vim/undodir"
+vim.opt.undodir = "/home/janv/.vim/undodir"
 vim.opt.undofile = true
 vim.opt.incsearch = true
 vim.opt.termguicolors = true
@@ -30,3 +30,5 @@ vim.api.nvim_create_autocmd({"BufWritePre"},
                             {pattern = "*", command = "%s/\\s\\+$//e"})
 vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"},
                             {pattern = "*.wgsl", command = "set filetype=wgsl"})
+
+vim.opt.autochdir = true

@@ -7,15 +7,19 @@ window:
 
 font:
   normal:
-    family: JetBrains Mono
+    family: JetBrains Mono Nerd Font
     style: Regular
   bold:
-    family: JetBrains Mono
+    family: JetBrains Mono Nerd Font
     style: Bold
   italic:
-    family: JetBrains Mono
+    family: JetBrains Mono Nerd Font
     style: Italic
   size: 11
+
+colors:
+  primary:
+    background: '#161616'
 
 dynamic_title: false
 decorations: none
