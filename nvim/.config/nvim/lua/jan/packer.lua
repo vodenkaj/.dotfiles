@@ -22,7 +22,6 @@ return require("packer").startup(function(use)
 
     use("lewis6991/gitsigns.nvim")
     use("mbbill/undotree")
-    use("rest-nvim/rest.nvim")
     use("lukas-reineke/indent-blankline.nvim")
 
     use("mfussenegger/nvim-dap")
@@ -47,5 +46,13 @@ return require("packer").startup(function(use)
             { 'L3MON4D3/LuaSnip' },
             { 'rafamadriz/friendly-snippets' }
         }
+    }
+
+    -- Remove the `use` here if you're using folke/lazy.nvim.
+    use {
+        'Exafunction/codeium.nvim',
+        config = function()
+            require("codeium").setup()
+        end
     }
 end)

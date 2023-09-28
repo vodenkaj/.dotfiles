@@ -31,9 +31,9 @@ tooltip {
 }
 
 #workspaces button.focused {
-    color: #a6adc8;
-    background: #eba0ac;
-    border-radius: 10px;
+    color: #cdd6f4;
+    background: #f38ba8;
+    border-radius: 5px;
 }
 
 #workspaces button.urgent {
