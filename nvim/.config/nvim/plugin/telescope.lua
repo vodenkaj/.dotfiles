@@ -3,6 +3,10 @@ vim.keymap.set("n", "<C-p>", function()
     require('telescope.builtin').git_files({ show_untracked = true })
 end, { silent = true })
 
+vim.keymap.set("n", "<C-f>", function()
+    require('telescope.builtin').find_files()
+end, { silent = true })
+
 vim.keymap.set("n", "<C-b>",
     function() require('telescope.builtin').buffers() end,
     { silent = true })
@@ -13,12 +17,17 @@ end, { silent = true })
 
 vim.keymap.set("n", "<C-g>", function()
     require('telescope.builtin').live_grep {
-        cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+        cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1],
+        glob_pattern = "!**/test/**"
     }
 end, { silent = true })
 
 require("telescope").setup {
     defaults = {
+        file_ignore_patterns = {
+            "test",
+            "migrations",
+        },
         file_sorter = require("telescope.sorters").get_fzy_sorter,
         color_devicons = true,
 

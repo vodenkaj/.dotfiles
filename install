@@ -6,12 +6,6 @@ if ! [[ $(pwd) =~ ".dotfiles"$ ]]; then
     exit
 fi
 
-# Oh-my-zsh
-if [[ ! -d "$ZSH" ]]; then
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-    rm $HOME/.zshrc
-fi
-
 FOLDERS=($(ls -d */))
 IGNORE=("bin")
 

@@ -35,6 +35,7 @@ return require("packer").startup(function(use)
             { 'neovim/nvim-lspconfig' },
             { 'williamboman/mason.nvim' },
             { 'williamboman/mason-lspconfig.nvim', run = ":MasonUpdate" },
+            { 'elixir-tools/elixir-tools.nvim' },
             -- Autocompletion
             { 'hrsh7th/nvim-cmp' },
             { 'hrsh7th/cmp-buffer' },
@@ -55,4 +56,15 @@ return require("packer").startup(function(use)
             require("codeium").setup()
         end
     }
+
+    use {
+        "jay-babu/mason-nvim-dap.nvim",
+    }
+
+    use({
+        "iamcco/markdown-preview.nvim",
+        run = function() vim.fn["mkdp#util#install"]() end,
+    })
+
+    use("chrisbra/csv.vim")
 end)

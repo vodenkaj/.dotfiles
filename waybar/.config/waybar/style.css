@@ -27,12 +27,12 @@ tooltip {
 }
 
 #workspaces button.active {
-    color: #a6adc8;
+    color: #fefae0;
 }
 
 #workspaces button.focused {
-    color: #cdd6f4;
-    background: #f38ba8;
+    color: #fefae0;
+    background: #e76f51;
     border-radius: 5px;
 }
 
@@ -43,9 +43,9 @@ tooltip {
 }
 
 #workspaces button:hover {
-    background: #11111b;
-    color: #cdd6f4;
-    border-radius: 10px;
+    background: #e76f51;
+    color: #fefae0;
+    border-radius: 5px;
 }
 
 #cpu,

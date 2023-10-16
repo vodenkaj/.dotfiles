@@ -15,6 +15,21 @@ local cmp_mappings = {
     ["<S-Tab>"] = lsp.cmp_action().luasnip_shift_supertab(),
 }
 
+local lspconfig = require('lspconfig');
+
+lspconfig.tsserver.setup {
+    root_dir = lspconfig.util.root_pattern(".git"),
+    init_options = {
+        maxTsServerMemory = "8096",
+        update_insert_text = false,
+        disableAutomaticTypingAcquisition = true
+    }
+}
+
+lspconfig.eslint.setup {
+    root_dir = lspconfig.util.root_pattern(".git"),
+}
+
 lsp.setup_nvim_cmp({
     sources = {
         { name = 'nvim_lsp'},

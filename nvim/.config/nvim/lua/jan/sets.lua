@@ -32,3 +32,4 @@ vim.api.nvim_create_autocmd({"BufNewFile", "BufRead"},
                             {pattern = "*.wgsl", command = "set filetype=wgsl"})
 
 vim.opt.autochdir = true
+vim.api.nvim_create_user_command("Tq", 'tabclose', {});
