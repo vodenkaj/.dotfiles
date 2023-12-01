@@ -16,7 +16,7 @@ output HDMI-A-1 pos 0 0 res 1920x1080
 output * bg /usr/share/wallpaper.png fill #111111
 
 bar swaybar_command waybar
-exec flameshot
+exec /bin/bash -c "sleep 10; QT_QPA_PLATFORM=xcb flameshot &"
 
 # Window config
 default_border pixel
@@ -69,7 +69,7 @@ for_window [title=^Volume\sControl$] floating enable
 
     bindsym $mod+0 exec swaylock --image /usr/share/wallpaper.png
 
-    bindsym Print exec flameshot gui --raw | wl-copy
+    bindsym Print exec QT_QPA_PLATFORM=xcb flameshot gui --raw | wl-copy
 
 #
 # Moving around:

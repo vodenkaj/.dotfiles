@@ -54,6 +54,7 @@ alias gs='git status'
 alias gc='git checkout'
 alias g='git'
 alias ga='git add'
+alias gdo='g diff @{upstream}'
 
 export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_DEFAULT_OPTS='--bind tab:toggle-up,btab:toggle-down'

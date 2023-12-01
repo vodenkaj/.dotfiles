@@ -67,4 +67,16 @@ return require("packer").startup(function(use)
     })
 
     use("chrisbra/csv.vim")
+    use("nvim-tree/nvim-tree.lua")
+
+    use {
+        'j-hui/fidget.nvim',
+        tag = 'legacy',
+        config = function()
+            require("fidget").setup {
+                -- options
+            }
+        end,
+    }
+    use({'creativenull/efmls-configs-nvim'})
 end)
