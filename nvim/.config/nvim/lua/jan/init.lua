@@ -1,3 +1,1 @@
-require("jan.packer")
-require("jan.sets")
-require("jan.keymaps")
+require("jan.config").init()
