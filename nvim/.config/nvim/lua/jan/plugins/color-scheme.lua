@@ -1,6 +1,7 @@
 return {
-  "rebelot/kanagawa.nvim",
+  "nyoom-engineering/oxocarbon.nvim",
+  config = function() end,
   opts = function()
-    vim.cmd.colorscheme("kanagawa")
+    vim.cmd.colorscheme("oxocarbon")
   end,
 }

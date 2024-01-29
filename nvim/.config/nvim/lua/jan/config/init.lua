@@ -12,6 +12,33 @@ M.icons = {
     modified = " ",
     removed = " ",
   },
+  cmp = {
+    Text = "txt",
+    Method = "ƒ",
+    Function = "ƒ",
+    Constructor = "⚒",
+    Field = "fld",
+    Variable = "var",
+    Class = "Cls",
+    Interface = "I",
+    Module = "M",
+    Property = "prop",
+    Unit = "U",
+    Value = "val",
+    Enum = "Enm",
+    Keyword = "key",
+    Snippet = "Snp",
+    Color = "Clr",
+    File = "F",
+    Reference = "Ref",
+    Folder = "Dir",
+    EnumMember = "Elt",
+    Constant = "Cst",
+    Struct = "Str",
+    Event = "Evt",
+    Operator = "Op",
+    TypeParameter = "T",
+  }
 }
 
 M.init = function()
