@@ -32,3 +32,10 @@ gitSmartCheckout() {
         git checkout $selected
     fi
 }
+
+gitContinue() {
+  file=$(git ls-files --modified --others --exclude-standard | fzf)
+  if [ -n "$file" ]; then
+      nvim "$file"
+  fi
+}

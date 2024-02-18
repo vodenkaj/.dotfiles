@@ -18,6 +18,7 @@ source $HOME/scripts.sh
 autoload -U edit-command-line
 autoload -Uz compinit && compinit
 
+bindkey -e
 zle -N edit-command-line
 bindkey "^e" edit-command-line
 bindkey "^[[Z" autosuggest-accept
@@ -54,6 +55,7 @@ alias gc='git checkout'
 alias g='git'
 alias ga='git add'
 alias gdo='g diff @{upstream}'
+alias ge='gitContinue'
 
 export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_DEFAULT_OPTS='--bind tab:toggle-up,btab:toggle-down'

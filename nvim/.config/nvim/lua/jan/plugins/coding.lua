@@ -1,5 +1,10 @@
 return {
-
+  {
+    "brenoprata10/nvim-highlight-colors",
+    config = function()
+      require("nvim-highlight-colors").setup()
+    end
+  },
   -- snippets
   {
     "L3MON4D3/LuaSnip",
