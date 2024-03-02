@@ -1,0 +1,24 @@
+[colors.primary]
+background = "#161616"
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 10
+
+[font.bold]
+family = "JetBrains Mono Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "JetBrains Mono Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "JetBrains Mono Nerd Font"
+style = "Regular"
+
+[window.padding]
+x = 10
+y = 10
