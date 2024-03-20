@@ -1,4 +1,11 @@
 return {
+  { "creativenull/efmls-configs-nvim" },
+  {
+    "Exafunction/codeium.nvim",
+    config = function()
+      require("codeium").setup()
+    end,
+  },
   -- lspconfig
   {
     "neovim/nvim-lspconfig",
@@ -77,7 +84,50 @@ return {
         -- end,
         -- Specify * to use this function as a fallback for any server
         -- ["*"] = function(server, opts) end,
-      },
+        efm = function(_, opts)
+          local eslint = require("efmls-configs.linters.eslint_d")
+          local eslint_formatter = require("efmls-configs.formatters.eslint_d")
+          local prettier = require("efmls-configs.formatters.prettier")
+          local stylua = require("efmls-configs.formatters.stylua")
+
+          local languages = {
+            typescript = {
+              eslint,
+              eslint_formatter,
+              prettier,
+            },
+            typescriptreact = {
+              eslint_formatter,
+              eslint_formatter,
+              prettier,
+            },
+            lua = {
+              stylua
+            },
+          }
+
+          local efmls_config = {
+            filetypes = vim.tbl_keys(languages),
+            settings = {
+              rootMarkers = { ".git/" },
+              languages = languages,
+            },
+            init_options = {
+              documentFormatting = true,
+              documentRangeFormatting = true,
+            },
+          }
+
+          require("lspconfig").efm.setup(vim.tbl_extend("force", efmls_config, {
+            -- Pass your custom lsp config below like on_attach and capabilities
+            --
+            -- on_attach = on_attach,
+            -- capabilities = capabilities,
+          }))
+
+          return true
+        end,
+      }
     },
     ---@param opts PluginLspOpts
     config = function(_, opts)
@@ -101,6 +151,18 @@ return {
       end
 
       vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
+
+      local lspconfig = require("lspconfig")
+      local config = require("lspconfig.configs")
+
+      config.mongo = {
+        default_config = {
+          cmd = { "cargo", "run", "--manifest-path", "/home/janv/Documents/rusty-db-cli/rusty_db_cli_lsp/Cargo.toml" },
+          filetypes = { "javascript" },
+          root_dir = require("lspconfig.util").root_pattern(".config")
+        }
+      }
+      lspconfig.mongo.setup({})
 
       local servers = opts.servers
       local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
@@ -154,10 +216,8 @@ return {
       end
     end,
   },
-
   -- cmdline tools and lsp servers
   {
-
     "williamboman/mason.nvim",
     cmd = "Mason",
     keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },

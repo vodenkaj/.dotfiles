@@ -7,8 +7,6 @@ $git_state\
 $git_status\
 $cmd_duration\
 $line_break\
-$python\
-$nodejs\
 $character"""
 
 [directory]
@@ -17,7 +15,6 @@ style = "blue"
 [character]
 success_symbol = "[❯](purple)"
 error_symbol = "[❯](red)"
-vimcmd_symbol = "[❮](green)"
 
 [git_branch]
 format = "[$branch]($style)"
@@ -42,6 +39,5 @@ style = "bright-black"
 format = "[$duration]($style) "
 style = "yellow"
 
-[python]
-format = "[$virtualenv]($style) "
-style = "bright-black"
+[package]
+disabled = true

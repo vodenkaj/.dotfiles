@@ -4,4 +4,11 @@ vim.keymap.set("n", "<leader>h", vim.lsp.buf.hover)
 vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action)
 vim.keymap.set("n", "<leader>n", vim.diagnostic.goto_next)
 vim.keymap.set("n", "<leader>p", vim.diagnostic.goto_prev)
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+vim.keymap.set("n", "<leader>f", function()
+  vim.lsp.buf.format({
+    timeout_ms = 10000,
+    filter = function(client)
+      return client.name ~= "tsserver"
+    end,
+  })
+end)

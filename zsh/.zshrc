@@ -38,6 +38,8 @@ setopt HIST_IGNORE_ALL_DUPS
 # History won't show duplicates on search.
 setopt HIST_FIND_NO_DUPS
 
+setopt INC_APPEND_HISTORY
+
 # General aliases
 alias ncfg='cd /home/janv/.dotfiles/nvim/.config/nvim'
 alias nv='nvim'
@@ -69,4 +71,5 @@ if [ -f "$HOME/.work" ]; then
 fi
 
 eval "$(starship init zsh)"
-eval "$(zoxide init zsh)"
+
+alias dbcli="cargo r --manifest-path ~/Documents/rusty-db-cli/rusty_db_cli/Cargo.toml"

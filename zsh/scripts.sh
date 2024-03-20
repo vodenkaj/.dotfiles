@@ -1,5 +1,5 @@
 tmxSession () {
-    selected=$(find ~/Documents -maxdepth 2 -mindepth 2 -type d | fzf)
+    selected=$(find ~/Documents -maxdepth 2 -mindepth 1 -type d | fzf)
     selected_name=$(basename "$selected" | tr . _)
     if [ -z $selected ]; then
         return
@@ -34,7 +34,7 @@ gitSmartCheckout() {
 }
 
 gitContinue() {
-  file=$(git ls-files --modified --others --exclude-standard | fzf)
+  file=$(git diff --name-only HEAD~1 | fzf)
   if [ -n "$file" ]; then
       nvim "$file"
   fi

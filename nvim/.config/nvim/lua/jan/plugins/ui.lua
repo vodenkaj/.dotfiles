@@ -36,12 +36,13 @@ return {
   {
     "rcarriga/nvim-notify",
     opts = {
+      render = "compact",
       timeout = 3000,
       max_height = function()
         return math.floor(vim.o.lines * 0.75)
       end,
       max_width = function()
-        return math.floor(vim.o.columns * 0.75)
+        return 100
       end,
       on_open = function(win)
         vim.api.nvim_win_set_config(win, { zindex = 100 })
@@ -110,7 +111,6 @@ return {
       vim.keymap.set("n", "<C-g>", function()
         require("telescope.builtin").live_grep({
           cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1],
-          glob_pattern = "!**/test/**",
         })
       end, { silent = true })
     end,
