@@ -1,7 +1,8 @@
 return {
-  "nyoom-engineering/oxocarbon.nvim",
+  "savq/melange-nvim",
   config = function() end,
   opts = function()
-    vim.cmd.colorscheme("oxocarbon")
+    vim.opt.termguicolors = true
+    vim.cmd.colorscheme("melange")
   end,
 }

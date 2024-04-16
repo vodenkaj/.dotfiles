@@ -1,9 +1,10 @@
-local util = require "jan.util"
+local util = require("jan.util")
 
 return {
   -- File explorer
   {
     "nvim-tree/nvim-tree.lua",
+    enabled = false,
     config = function()
       vim.g.loaded_netrw = 1
       vim.g.loaded_netrwPlugin = 1
@@ -59,6 +60,42 @@ return {
     "nvim-telescope/telescope.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
+      _G.telescope_exclusions_enabled = true
+      _G.current_folder = false
+      _G.prev_telescope = nil
+
+      local function getParentFolder(opts)
+        if opts.current_folder then
+          return vim.fn.expand("%:p:h")
+        end
+
+        return vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+      end
+
+      local function TelescopeWithInstance(opts)
+        _G.telescope_exclusions_enabled = not _G.telescope_exclusions_enabled
+        if _G.telescope_exclusions_enabled then
+          _G.prev_telescope({
+            cwd = getParentFolder(opts),
+          })
+        else
+          _G.prev_telescope({
+            cwd = getParentFolder({
+              cwd = getParentFolder(opts),
+              default_text = opts.search or "",
+              additional_args = function(_)
+                return {
+                  "--glob",
+                  "!**/test/**",
+                  "--glob",
+                  "!**/migrations/**",
+                }
+              end,
+            }),
+          })
+        end
+      end
+
       require("telescope").setup({
         defaults = {
           file_sorter = require("telescope.sorters").get_fzy_sorter,
@@ -87,33 +124,86 @@ return {
             i = {
               ["<Tab>"] = require("telescope.actions").move_selection_previous,
               ["<S-Tab>"] = require("telescope.actions").move_selection_next,
+              ["<C-x>"] = function()
+                vim.api.nvim_buf_delete(0, { force = true }) -- Close the current Telescope buffer
+                TelescopeWithInstance({
+                  current_folder = _G.current_folder,
+                })
+              end,
+              ["<C-o>"] = function()
+                vim.api.nvim_buf_delete(0, { force = true }) -- Close the current Telescope buffer
+                _G.current_folder = not _G.current_folder
+                TelescopeWithInstance({
+                  current_folder = _G.current_folder,
+                })
+              end,
             },
           },
-        }
+        },
       })
       -- Maps
       vim.keymap.set("n", "<C-p>", function()
+        _G.prev_telescope = function(opts)
+          opts.show_untracked = true
+          require("telescope.builtin").git_files(opts)
+        end
         require("telescope.builtin").git_files({ show_untracked = true })
       end, { silent = true })
 
       vim.keymap.set("n", "<C-f>", function()
+        _G.prev_telescope = function(opts)
+          require("telescope.builtin").find_files(opts)
+        end
         require("telescope.builtin").find_files()
       end, { silent = true })
 
       vim.keymap.set("n", "<C-b>", function()
+        _G.prev_telescope = nil
         require("telescope.builtin").buffers()
       end, { silent = true })
 
       vim.keymap.set("n", "<leader>vrr", function()
+        _G.prev_telescope = nil
         require("telescope.builtin").lsp_references({ path_display = true })
       end, { silent = true })
 
       vim.keymap.set("n", "<C-g>", function()
+        _G.prev_telescope = function(opts)
+          require("telescope.builtin").live_grep(opts)
+        end
         require("telescope.builtin").live_grep({
           cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1],
+          additional_args = function(opts)
+            return {
+              "--glob",
+              "!**/test/**",
+              "--glob",
+              "!**/migrations/**",
+            }
+          end,
         })
       end, { silent = true })
     end,
+  },
+
+  -- Telescope file browser
+  {
+    "nvim-telescope/telescope-file-browser.nvim",
+    config = function()
+      vim.g.loaded_netrw = 1
+      vim.g.loaded_netrwPlugin = 1
+
+      local api = require("telescope").extensions.file_browser
+
+      vim.keymap.set("n", "<C-t>", api.file_browser, { silent = true })
+      vim.keymap.set("n", "<C-a>", function()
+        api.file_browser({
+          path = "%:p:h",
+          select_buffer = true,
+        })
+      end, { silent = true })
+    end,
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
   },
 
   -- Status line
@@ -202,11 +292,6 @@ return {
                 end
               end,
             },
-          },
-          lualine_z = {
-            function()
-              return " " .. os.date("%R")
-            end,
           },
         },
         extensions = { "lazy" },

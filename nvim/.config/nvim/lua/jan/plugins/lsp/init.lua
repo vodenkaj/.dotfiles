@@ -77,6 +77,29 @@ return {
       -- return true if you don't want this server to be setup with lspconfig
       ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
       setup = {
+        ["jdtls"] = function(server, opts)
+          vim.api.nvim_create_autocmd("FileType", {
+            pattern = "java",
+            callback = function()
+              vim.opt_local.shiftwidth = 4
+              vim.opt_local.tabstop = 4
+            end,
+          })
+
+          require("lspconfig")[server].setup({
+            settings = {
+              java = {
+                format = {
+                  settings = {
+                    url = vim.fs.dirname(vim.fs.find({ "gradlew", ".git" }, { upward = true })[1])
+                        .. "/java-code-style.xml",
+                  },
+                },
+              },
+            },
+          })
+          return true
+        end,
         -- example to setup with typescript.nvim
         -- tsserver = function(_, opts)
         --   require("typescript").setup({ server = opts })
@@ -102,7 +125,7 @@ return {
               prettier,
             },
             lua = {
-              stylua
+              stylua,
             },
           }
 
@@ -127,7 +150,7 @@ return {
 
           return true
         end,
-      }
+      },
     },
     ---@param opts PluginLspOpts
     config = function(_, opts)
@@ -155,15 +178,6 @@ return {
       local lspconfig = require("lspconfig")
       local config = require("lspconfig.configs")
 
-      config.mongo = {
-        default_config = {
-          cmd = { "cargo", "run", "--manifest-path", "/home/janv/Documents/rusty-db-cli/rusty_db_cli_lsp/Cargo.toml" },
-          filetypes = { "javascript" },
-          root_dir = require("lspconfig.util").root_pattern(".config")
-        }
-      }
-      lspconfig.mongo.setup({})
-
       local servers = opts.servers
       local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
       local capabilities = vim.tbl_deep_extend(
@@ -190,6 +204,16 @@ return {
         end
         require("lspconfig")[server].setup(server_opts)
       end
+
+      config.mongo = {
+        default_config = {
+          cmd = { "cargo", "run", "--manifest-path", "/home/janv/Documents/Projects/rusty-db-cli/rusty_db_cli_lsp/Cargo.toml" },
+          filetypes = { "javascript" },
+          root_dir = require("lspconfig.util").root_pattern(".config"),
+        },
+      }
+      lspconfig.mongo.setup({})
+
 
       -- get all the servers that are available through mason-lspconfig
       local have_mason, mlsp = pcall(require, "mason-lspconfig")
