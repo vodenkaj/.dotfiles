@@ -1,14 +1,9 @@
-return { "sindrets/diffview.nvim",
-
+return {
+  "sindrets/diffview.nvim",
   {
-    'pwntester/octo.nvim',
-    requires = {
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope.nvim',
-      'nvim-tree/nvim-web-devicons',
-    },
+    "tpope/vim-fugitive",
     config = function()
-      require "octo".setup()
-    end
-  }
+      vim.keymap.set("n", "<leader>b", ":Git blame<CR>", { silent = true })
+    end,
+  },
 }

@@ -7,7 +7,6 @@ return {
         local gs = package.loaded.gitsigns
         vim.keymap.set("n", "<leader>hn", gs.next_hunk)
         vim.keymap.set("n", "<leader>hp", gs.prev_hunk)
-        vim.keymap.set("n", "<leader>hh", gs.preview_hunk)
       end
     })
   end
