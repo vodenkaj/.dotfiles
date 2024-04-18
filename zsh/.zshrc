@@ -11,6 +11,7 @@ source $ZSH/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 source $ZSH/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
 source $ZSH/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $ZSH/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $ZSH/plugins/fzf-git.sh/fzf-git.sh
 
 source $HOME/scripts.sh
 
@@ -63,6 +64,8 @@ export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_DEFAULT_OPTS='--bind tab:toggle-up,btab:toggle-down'
 export VIMRC='/home/janv/.config/nvim/init.lua';
 export T_SESSION_USE_GIT_ROOT="true"
+
+eval "$(fzf --zsh)"
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
