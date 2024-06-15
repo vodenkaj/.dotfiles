@@ -2,6 +2,7 @@ return {
   { "creativenull/efmls-configs-nvim" },
   {
     "Exafunction/codeium.nvim",
+    enabled = false,
     config = function()
       require("codeium").setup()
     end,

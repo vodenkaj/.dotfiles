@@ -76,3 +76,10 @@ fi
 eval "$(starship init zsh)"
 
 alias dbcli="cargo r --manifest-path ~/Documents/rusty-db-cli/rusty_db_cli/Cargo.toml"
+alias clipaste="xclip -o -selection clipboard"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/janv/google-cloud-sdk/path.zsh.inc' ]; then . '/home/janv/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/janv/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/janv/google-cloud-sdk/completion.zsh.inc'; fi

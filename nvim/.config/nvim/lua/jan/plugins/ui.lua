@@ -63,6 +63,7 @@ return {
       _G.telescope_exclusions_enabled = true
       _G.current_folder = false
       _G.prev_telescope = nil
+      _G.mode = nil
 
       local function getParentFolder(opts)
         if opts.current_folder then
@@ -72,27 +73,36 @@ return {
         return vim.fn.systemlist("git rev-parse --show-toplevel")[1]
       end
 
+      local function ignorePatters(opts)
+        if _G.mode == "GREP" then
+          opts.additional_args = function(_)
+            return {
+              "--glob",
+              "!**/test/**",
+              "--glob",
+              "!**/migrations/**",
+            }
+          end
+        else
+          opts.file_ignore_patterns = {
+            "test",
+            "migrations",
+          }
+        end
+
+        return opts
+      end
+
       local function TelescopeWithInstance(opts)
         _G.telescope_exclusions_enabled = not _G.telescope_exclusions_enabled
+        local params = {
+          cwd = getParentFolder(opts),
+        }
+
         if _G.telescope_exclusions_enabled then
-          _G.prev_telescope({
-            cwd = getParentFolder(opts),
-          })
+          _G.prev_telescope(ignorePatters(params))
         else
-          _G.prev_telescope({
-            cwd = getParentFolder({
-              cwd = getParentFolder(opts),
-              default_text = opts.search or "",
-              additional_args = function(_)
-                return {
-                  "--glob",
-                  "!**/test/**",
-                  "--glob",
-                  "!**/migrations/**",
-                }
-              end,
-            }),
-          })
+          _G.prev_telescope(params)
         end
       end
 
@@ -124,7 +134,7 @@ return {
             i = {
               ["<Tab>"] = require("telescope.actions").move_selection_previous,
               ["<S-Tab>"] = require("telescope.actions").move_selection_next,
-              ["<C-x>"] = function()
+              ["<C-e>"] = function()
                 vim.api.nvim_buf_delete(0, { force = true }) -- Close the current Telescope buffer
                 TelescopeWithInstance({
                   current_folder = _G.current_folder,
@@ -143,6 +153,7 @@ return {
       })
       -- Maps
       vim.keymap.set("n", "<C-p>", function()
+        _G.mode = "FIND"
         _G.prev_telescope = function(opts)
           opts.show_untracked = true
           require("telescope.builtin").git_files(opts)
@@ -151,6 +162,7 @@ return {
       end, { silent = true })
 
       vim.keymap.set("n", "<C-f>", function()
+        _G.mode = "FIND"
         _G.prev_telescope = function(opts)
           require("telescope.builtin").find_files(opts)
         end
@@ -168,6 +180,7 @@ return {
       end, { silent = true })
 
       vim.keymap.set("n", "<C-g>", function()
+        _G.mode = "GREP"
         _G.prev_telescope = function(opts)
           require("telescope.builtin").live_grep(opts)
         end
