@@ -74,6 +74,7 @@ if [ -f "$HOME/.work" ]; then
 fi
 
 eval "$(starship init zsh)"
+eval "$(tmuxifier init -)"
 
 alias dbcli="cargo r --manifest-path ~/Documents/rusty-db-cli/rusty_db_cli/Cargo.toml"
 alias clipaste="xclip -o -selection clipboard"

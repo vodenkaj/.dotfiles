@@ -1,11 +1,11 @@
 [colors.primary]
-background = "#16161D"
+background = "#080808"
 
 [env]
 TERM = "xterm-256color"
 
 [font]
-size = 9
+size = 11
 
 [font.bold]
 family = "JetBrains Mono Nerd Font"

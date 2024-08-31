@@ -1,7 +1,5 @@
 vim.keymap.set({ "v", "n" }, "<leader>y", "\"+y")
 vim.keymap.set("v", "<C-j>", "<C-w>j")
-vim.keymap.set("v", "<S-l>", ":cnext")
-vim.keymap.set("v", "<S-h>", ":cprevious")
 vim.keymap.set("v", "<C-l>", "<C-w>l")
 vim.keymap.set("v", "<C-h>", "<C-w>h")
 vim.keymap.set("v", "<C-k>", "<C-w>k")

@@ -33,6 +33,21 @@ return {
     end,
   },
 
+  {
+    "stevearc/oil.nvim",
+    opts = {},
+    -- Optional dependencies
+    dependencies = { { "echasnovski/mini.icons", opts = {} } },
+    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+    init = function()
+      local oil = require("oil")
+      oil.setup()
+      vim.keymap.set("n", "<C-t>", function()
+        oil.open_float()
+      end, { silent = true })
+    end,
+  },
+
   -- Better notifications
   {
     "rcarriga/nvim-notify",
@@ -128,10 +143,12 @@ return {
           treesitter = true,
           mappings = {
             n = {
+              ["<C-s>"] = require("telescope.actions").select_vertical,
               ["<Tab>"] = require("telescope.actions").move_selection_previous,
               ["<S-Tab>"] = require("telescope.actions").move_selection_next,
             },
             i = {
+              ["<C-s>"] = require("telescope.actions").select_vertical,
               ["<Tab>"] = require("telescope.actions").move_selection_previous,
               ["<S-Tab>"] = require("telescope.actions").move_selection_next,
               ["<C-e>"] = function()
@@ -139,7 +156,7 @@ return {
                 TelescopeWithInstance({
                   current_folder = _G.current_folder,
                 })
-              end,
+               end,
               ["<C-o>"] = function()
                 vim.api.nvim_buf_delete(0, { force = true }) -- Close the current Telescope buffer
                 _G.current_folder = not _G.current_folder
@@ -200,24 +217,24 @@ return {
   },
 
   -- Telescope file browser
-  {
-    "nvim-telescope/telescope-file-browser.nvim",
-    config = function()
-      vim.g.loaded_netrw = 1
-      vim.g.loaded_netrwPlugin = 1
+  --{
+  --  "nvim-telescope/telescope-file-browser.nvim",
+  --  config = function()
+  --    vim.g.loaded_netrw = 1
+  --    vim.g.loaded_netrwPlugin = 1
 
-      local api = require("telescope").extensions.file_browser
+  --    local api = require("telescope").extensions.file_browser
 
-      vim.keymap.set("n", "<C-t>", api.file_browser, { silent = true })
-      vim.keymap.set("n", "<C-a>", function()
-        api.file_browser({
-          path = "%:p:h",
-          select_buffer = true,
-        })
-      end, { silent = true })
-    end,
-    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
-  },
+  --    vim.keymap.set("n", "<C-t>", api.file_browser, { silent = true })
+  --    vim.keymap.set("n", "<C-a>", function()
+  --      api.file_browser({
+  --        path = "%:p:h",
+  --        select_buffer = true,
+  --      })
+  --    end, { silent = true })
+  --  end,
+  --  dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+  --},
 
   -- Status line
   {
@@ -319,5 +336,15 @@ return {
     opts = {
       -- options
     },
+  },
+
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = "cd app && yarn install",
+    init = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+    end,
+    ft = { "markdown" },
   },
 }

@@ -206,14 +206,14 @@ return {
         require("lspconfig")[server].setup(server_opts)
       end
 
-      config.mongo = {
-        default_config = {
-          cmd = { "cargo", "run", "--manifest-path", "/home/janv/Documents/Projects/rusty-db-cli/rusty_db_cli_lsp/Cargo.toml" },
-          filetypes = { "javascript" },
-          root_dir = require("lspconfig.util").root_pattern(".config"),
-        },
-      }
-      lspconfig.mongo.setup({})
+      --config.mongo = {
+      --  default_config = {
+      --    cmd = { "cargo", "run", "--manifest-path", "/home/janv/Documents/rusty-db-cli/rusty_db_cli_lsp/Cargo.toml" },
+      --    filetypes = { "javascript" },
+      --    root_dir = require("lspconfig.util").root_pattern(".config"),
+      --  },
+      --}
+      --lspconfig.mongo.setup({})
 
 
       -- get all the servers that are available through mason-lspconfig
