@@ -19,7 +19,7 @@ font:
 
 colors:
   primary:
-    background: '#161616'
+    background: '#161617'
 
 dynamic_title: false
 decorations: none

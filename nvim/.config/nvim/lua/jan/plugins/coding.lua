@@ -1,4 +1,20 @@
 return {
+  {
+    "echasnovski/mini.nvim",
+    config = function() end,
+  },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+  },
+  -- lazy.nvim
+  {
+    "m4xshen/hardtime.nvim",
+    dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+    opts = {
+      disabled_filetypes = { "qf", "netrw", "oil" },
+      notification = false
+    },
+  },
   { "chrisbra/csv.vim" },
   {
     "brenoprata10/nvim-highlight-colors",
@@ -11,7 +27,7 @@ return {
     "L3MON4D3/LuaSnip",
     build = (not jit.os:find("Windows"))
         and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
-        or nil,
+      or nil,
     dependencies = {
       "rafamadriz/friendly-snippets",
       config = function()
@@ -26,13 +42,6 @@ return {
       vim.keymap.set({ "i" }, "<leader-Tab>", function()
         require("luasnip").expand_or_jump()
       end)
-    end,
-  },
-
-  {
-    "Exafunction/codeium.nvim",
-    config = function()
-      require("codeium").setup()
     end,
   },
 
@@ -90,7 +99,7 @@ return {
           { name = "nvim_lsp" },
           { name = "luasnip" },
           { name = "path" },
-          { name = "buffer",  keyword_length = 5 },
+          { name = "buffer", keyword_length = 5 },
         }),
         formatting = {
           format = function(_, item)
@@ -144,15 +153,10 @@ return {
   "tpope/vim-surround",
   "junegunn/vim-easy-align",
   "AndrewRadev/linediff.vim",
+
   {
-    "NeogitOrg/neogit",
-    dependencies = {
-      "nvim-lua/plenary.nvim",         -- required
-      "sindrets/diffview.nvim",        -- optional - Diff integration
-      -- Only one of these is needed, not both.
-      "nvim-telescope/telescope.nvim", -- optional
-      "ibhagwan/fzf-lua",              -- optional
-    },
-    config = true,
+    "folke/trouble.nvim",
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+    cmd = "Trouble",
   },
 }

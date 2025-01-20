@@ -121,7 +121,7 @@ return {
               prettier,
             },
             typescriptreact = {
-              eslint_formatter,
+              eslint,
               eslint_formatter,
               prettier,
             },

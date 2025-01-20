@@ -109,7 +109,6 @@ return {
       end
 
       local function TelescopeWithInstance(opts)
-        _G.telescope_exclusions_enabled = not _G.telescope_exclusions_enabled
         local params = {
           cwd = getParentFolder(opts),
         }
@@ -151,58 +150,14 @@ return {
               ["<C-s>"] = require("telescope.actions").select_vertical,
               ["<Tab>"] = require("telescope.actions").move_selection_previous,
               ["<S-Tab>"] = require("telescope.actions").move_selection_next,
-              ["<C-e>"] = function()
-                vim.api.nvim_buf_delete(0, { force = true }) -- Close the current Telescope buffer
-                TelescopeWithInstance({
-                  current_folder = _G.current_folder,
-                })
-               end,
-              ["<C-o>"] = function()
-                vim.api.nvim_buf_delete(0, { force = true }) -- Close the current Telescope buffer
-                _G.current_folder = not _G.current_folder
-                TelescopeWithInstance({
-                  current_folder = _G.current_folder,
-                })
-              end,
             },
           },
         },
       })
       -- Maps
       vim.keymap.set("n", "<C-p>", function()
-        _G.mode = "FIND"
-        _G.prev_telescope = function(opts)
-          opts.show_untracked = true
-          require("telescope.builtin").git_files(opts)
-        end
-        require("telescope.builtin").git_files({ show_untracked = true })
-      end, { silent = true })
-
-      vim.keymap.set("n", "<C-f>", function()
-        _G.mode = "FIND"
-        _G.prev_telescope = function(opts)
-          require("telescope.builtin").find_files(opts)
-        end
-        require("telescope.builtin").find_files()
-      end, { silent = true })
-
-      vim.keymap.set("n", "<C-b>", function()
-        _G.prev_telescope = nil
-        require("telescope.builtin").buffers()
-      end, { silent = true })
-
-      vim.keymap.set("n", "<leader>vrr", function()
-        _G.prev_telescope = nil
-        require("telescope.builtin").lsp_references({ path_display = true })
-      end, { silent = true })
-
-      vim.keymap.set("n", "<C-g>", function()
-        _G.mode = "GREP"
-        _G.prev_telescope = function(opts)
-          require("telescope.builtin").live_grep(opts)
-        end
-        require("telescope.builtin").live_grep({
-          cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1],
+        require("telescope.builtin").git_files({
+          show_untracked = true,
           additional_args = function(opts)
             return {
               "--glob",
@@ -211,6 +166,36 @@ return {
               "!**/migrations/**",
             }
           end,
+        })
+      end, { silent = true })
+
+      vim.keymap.set("n", "<C-f>", function()
+        require("telescope.builtin").find_files()
+      end, { silent = true })
+
+      vim.keymap.set("n", "<Leader>gs", function()
+        require("telescope.builtin").git_status()
+      end, { silent = true })
+
+      vim.keymap.set("n", "<C-b>", function()
+        require("telescope.builtin").buffers()
+      end, { silent = true })
+
+      vim.keymap.set("n", "<leader>vrr", function()
+        require("telescope.builtin").lsp_references({ path_display = true })
+      end, { silent = true })
+
+      vim.keymap.set("n", "<C-g>", function()
+        require("telescope.builtin").live_grep({
+          cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1],
+          -- additional_args = function(opts)
+          --   return {
+          --     "--glob",
+          --     "!**/test/**",
+          --     "--glob",
+          --     "!**/migrations/**",
+          --   }
+          -- end,
         })
       end, { silent = true })
     end,
@@ -280,7 +265,7 @@ return {
                 hint = icons.diagnostics.Hint,
               },
             },
-            { "filetype",        icon_only = true, separator = "", padding = { left = 1, right = 0 } },
+            { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
             { util.pretty_path() },
           },
           lualine_x = {
@@ -332,7 +317,6 @@ return {
   { "nvim-tree/nvim-web-devicons", lazy = true },
   {
     "j-hui/fidget.nvim",
-    tag = "v1.0.0",
     opts = {
       -- options
     },

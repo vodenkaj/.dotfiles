@@ -19,3 +19,38 @@ fileviewer *.opf highlight -O xterm256 --syntax xml
 fileviewer *.md highlight -O xterm256 --syntax markdown
 " fileviewer Makefile,Makefile.* highlight -O xterm256 -s dante --syntax make %c
 fileviewer *.html,*.go,*.css,*.c highlight -O xterm256 -s dante %c
+
+fileviewer *.pdf
+    \ vifmimg pdf %px %py %pw %ph %c
+    \ %pc
+    \ vifmimg clear
+
+fileviewer *.djvu
+    \ vifmimg djvu %px %py %pw %ph %c
+    \ %pc
+    \ vifmimg clear
+
+fileviewer *.epub
+    \ vifmimg epub %px %py %pw %ph %c
+    \ %pc
+    \ vifmimg clear
+
+fileviewer <video/*>
+    \ vifmimg video %px %py %pw %ph %c
+    \ %pc
+    \ vifmimg clear
+
+fileviewer <image/*>
+    \ vifmimg draw %px %py %pw %ph %c
+    \ %pc
+    \ vifmimg clear
+
+fileviewer <audio/*>
+    \ vifmimg audio %px %py %pw %ph %c
+    \ %pc
+    \ vifmimg clear
+
+fileviewer <font/*>
+    \ vifmimg font %px %py %pw %ph %c
+    \ %pc
+    \ vifmimg clear
