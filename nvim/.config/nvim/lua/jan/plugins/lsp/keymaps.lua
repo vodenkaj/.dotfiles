@@ -7,7 +7,7 @@ vim.keymap.set("n", "<leader>f", function()
   vim.lsp.buf.format({
     timeout_ms = 10000,
     filter = function(client)
-      return client.name ~= "tsserver"
+      return client.name ~= "ts_ls"
     end,
   })
 end)
