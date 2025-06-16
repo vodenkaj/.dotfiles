@@ -13,45 +13,45 @@ local function select_process_with_telescope(dap, filter)
 
   _G.selected_process_id = nil
   pickers
-      .new({}, {
-        prompt_title = "Select" .. " " .. filter .. " " .. "Process",
-        finder = finders.new_table({
-          results = processes,
-          entry_maker = function(entry)
-            return {
-              value = entry.pid,
-              display = entry.name,
-              ordinal = entry.name,
-            }
-          end,
-        }),
-        sorter = conf.generic_sorter({}),
-        attach_mappings = function(prompt_bufnr, map)
-          map("i", "<C-c>", function()
-            actions.close(prompt_bufnr)
-            if _G.selected_process_id == nil then
-              dap.disconnect()
-              dap.close()
-            end
-          end)
-          map("i", "<Esc>", function()
-            actions.close(prompt_bufnr)
-            if _G.selected_process_id == nil then
-              dap.disconnect()
-              dap.close()
-            end
-          end)
-
-          actions.select_default:replace(function()
-            local selection = action_state.get_selected_entry()
-            actions.close(prompt_bufnr)
-            _G.selected_process_id = selection.value
-          end)
-
-          return true
+    .new({}, {
+      prompt_title = "Select" .. " " .. filter .. " " .. "Process",
+      finder = finders.new_table({
+        results = processes,
+        entry_maker = function(entry)
+          return {
+            value = entry.pid,
+            display = entry.name,
+            ordinal = entry.name,
+          }
         end,
-      })
-      :find()
+      }),
+      sorter = conf.generic_sorter({}),
+      attach_mappings = function(prompt_bufnr, map)
+        map("i", "<C-c>", function()
+          actions.close(prompt_bufnr)
+          if _G.selected_process_id == nil then
+            dap.disconnect()
+            dap.close()
+          end
+        end)
+        map("i", "<Esc>", function()
+          actions.close(prompt_bufnr)
+          if _G.selected_process_id == nil then
+            dap.disconnect()
+            dap.close()
+          end
+        end)
+
+        actions.select_default:replace(function()
+          local selection = action_state.get_selected_entry()
+          actions.close(prompt_bufnr)
+          _G.selected_process_id = selection.value
+        end)
+
+        return true
+      end,
+    })
+    :find()
 end
 
 return {
@@ -124,25 +124,50 @@ return {
         },
       }
 
-      dap.adapters.vscodedebug = {
-        type = "executable",
-        command = "node",
-        args = { "/home/janv/Downloads/vscode-js-debug/out/src/vsDebugServer.js" },
-        name = "vscodedebug",
+      dap.adapters["pwa-node"] = {
+        type = "server",
+        host = "localhost",
+        port = "8123",
+        --executable = {
+        --  command = "node",
+        --  args = { "/home/janv/Documents/vscode-js-debug/js-debug/src/dapDebugServer.js" },
+        --},
+        name = "pwa-node",
       }
       dap.configurations.typescript = {
         {
           name = "node",
-          type = "vscodedebug",
+          type = "pwa-node",
           request = "attach",
-          sourceMaps = true,
-          trace = true,
           pid = function()
-            select_process_with_telescope(dap, "node")
-            return _G.selected_process_id
+            return 57552
           end,
+        },
+        {
+          -- use nvim-dap-vscode-js's pwa-chrome debug adapter
+          type = "pwa-chrome",
+          request = "launch",
+          -- name of the debug action
+          name = "Launch Chrome to debug client side code",
+          -- default vite dev server url
+          url = "http://localhost:5173",
+          -- for TypeScript/Svelte
+          sourceMaps = true,
+          webRoot = "${workspaceFolder}/src",
+          protocol = "inspector",
+          port = 9222,
+          -- skip files from vite's hmr
+          skipFiles = { "**/node_modules/**/*", "**/@vite/*", "**/src/client/*", "**/src/*" },
         },
       }
     end,
+  },
+  {
+    {
+      "igorlfs/nvim-dap-view",
+      ---@module 'dap-view'
+      ---@type dapview.Config
+      opts = {},
+    },
   },
 }

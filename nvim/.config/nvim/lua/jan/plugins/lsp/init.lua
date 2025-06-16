@@ -12,7 +12,7 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = {
       { "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
-      { "folke/neodev.nvim",  opts = {} },
+      { "folke/neodev.nvim", opts = {} },
       "mason.nvim",
       "williamboman/mason-lspconfig.nvim",
     },
@@ -41,6 +41,11 @@ return {
       -- LSP Server Settings
       ---@type lspconfig.options
       servers = {
+        ts_ls = {
+          root_dir = function(...)
+            return require("lspconfig.util").root_pattern(".git")(...)
+          end,
+        },
         rust_analyzer = {
           root_dir = function(...)
             return require("lspconfig.util").root_pattern(".git")(...)
@@ -87,18 +92,18 @@ return {
             end,
           })
 
-          require("lspconfig")[server].setup({
-            settings = {
-              java = {
-                format = {
-                  settings = {
-                    url = vim.fs.dirname(vim.fs.find({ "gradlew", ".git" }, { upward = true })[1])
-                        .. "/java-code-style.xml",
-                  },
-                },
-              },
-            },
-          })
+          -- require("lspconfig")[server].setup({
+          --   settings = {
+          --     java = {
+          --       format = {
+          --         settings = {
+          --           url = vim.fs.dirname(vim.fs.find({ "gradlew", ".git" }, { upward = true })[1])
+          --             .. "/java-code-style.xml",
+          --         },
+          --       },
+          --     },
+          --   },
+          -- })
           return true
         end,
         -- example to setup with typescript.nvim
@@ -176,9 +181,6 @@ return {
 
       vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
-      local lspconfig = require("lspconfig")
-      local config = require("lspconfig.configs")
-
       local servers = opts.servers
       local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
       local capabilities = vim.tbl_deep_extend(
@@ -206,39 +208,31 @@ return {
         require("lspconfig")[server].setup(server_opts)
       end
 
-      --config.mongo = {
-      --  default_config = {
-      --    cmd = { "cargo", "run", "--manifest-path", "/home/janv/Documents/rusty-db-cli/rusty_db_cli_lsp/Cargo.toml" },
-      --    filetypes = { "javascript" },
-      --    root_dir = require("lspconfig.util").root_pattern(".config"),
-      --  },
-      --}
-      --lspconfig.mongo.setup({})
-
-
       -- get all the servers that are available through mason-lspconfig
       local have_mason, mlsp = pcall(require, "mason-lspconfig")
       local all_mslp_servers = {}
       if have_mason then
-        all_mslp_servers = vim.tbl_keys(require("mason-lspconfig.mappings.server").lspconfig_to_package)
+        all_mslp_servers = require("mason-lspconfig").get_mappings().lspconfig_to_package
       end
 
-      local ensure_installed = {} ---@type string[]
-      for server, server_opts in pairs(servers) do
-        if server_opts then
-          server_opts = server_opts == true and {} or server_opts
-          -- run manual setup if mason=false or if this is a server that cannot be installed with mason-lspconfig
-          if server_opts.mason == false or not vim.tbl_contains(all_mslp_servers, server) then
-            setup(server)
-          else
-            ensure_installed[#ensure_installed + 1] = server
-          end
-        end
+      --local ensure_installed = {} ---@type string[]
+      for server in pairs(servers) do
+        setup(server)
       end
 
-      if have_mason then
-        mlsp.setup({ ensure_installed = ensure_installed, handlers = { setup } })
+      for server in pairs(opts.setup) do
+        setup(server)
       end
+
+      --setup("efm")
+      --setup("ts_ls")
+
+      --if have_mason then
+      --  mlsp.setup({
+      --    ensure_installed = ensure_installed,
+      --    handlers = { setup }
+      --  })
+      --end
     end,
   },
   -- cmdline tools and lsp servers
@@ -254,23 +248,5 @@ return {
         -- "flake8",
       },
     },
-    ---@param opts MasonSettings | {ensure_installed: string[]}
-    config = function(_, opts)
-      require("mason").setup(opts)
-      local mr = require("mason-registry")
-      local function ensure_installed()
-        for _, tool in ipairs(opts.ensure_installed) do
-          local p = mr.get_package(tool)
-          if not p:is_installed() then
-            p:install()
-          end
-        end
-      end
-      if mr.refresh then
-        mr.refresh(ensure_installed)
-      else
-        ensure_installed()
-      end
-    end,
   },
 }

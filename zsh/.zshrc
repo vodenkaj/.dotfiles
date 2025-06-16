@@ -5,13 +5,13 @@ export VISUAL=nvim
 export EDITOR=nvim
 
 # Yarn path
-export PATH="/home/janv/.yarn/bin:$PATH:/home/janv/.cargo/bin"
+export PATH="/home/janv/.yarn/bin:$PATH:/home/janv/.cargo/bin:$HOME/Documents/tmuxifier"
 
-source $ZSH/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
-source $ZSH/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-source $ZSH/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source $ZSH/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $ZSH/plugins/fzf-git.sh/fzf-git.sh
+#source $ZSH/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+#source $ZSH/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+#source $ZSH/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#source $ZSH/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+#source $ZSH/plugins/fzf-git.sh/fzf-git.sh
 
 source $HOME/scripts.sh
 
@@ -25,11 +25,12 @@ bindkey "^e" edit-command-line
 bindkey "^[[Z" autosuggest-accept
 bindkey -s ^N "tmxSession\n"
 bindkey -s ^F "nvfzf\n"
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
+#bindkey '^[[A' history-substring-search-up
+#bindkey '^[[B' history-substring-search-down
+alias tsserver="/usr/local/bin/typescript-language-server"
 
 # History
-export HISTFILE=$ZSH/.zsh_history
+export HISTFILE=$HOME/.zsh_history
 # How many commands zsh will load to memory.
 export HISTSIZE=10000
 # How many commands history will save on file.
@@ -74,7 +75,7 @@ if [ -f "$HOME/.work" ]; then
 fi
 
 eval "$(starship init zsh)"
-eval "$(tmuxifier init -)"
+eval "$(tmuxifier.tmux init -)"
 
 alias dbcli="cargo r --manifest-path ~/Documents/rusty-db-cli/rusty_db_cli/Cargo.toml"
 alias clipaste="xclip -o -selection clipboard"
