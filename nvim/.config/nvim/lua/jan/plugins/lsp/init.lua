@@ -1,20 +1,11 @@
 return {
   { "creativenull/efmls-configs-nvim" },
-  {
-    "Exafunction/codeium.nvim",
-    enabled = false,
-    config = function()
-      require("codeium").setup()
-    end,
-  },
   -- lspconfig
   {
     "neovim/nvim-lspconfig",
     dependencies = {
       { "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
-      { "folke/neodev.nvim", opts = {} },
-      "mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
+      { "folke/neodev.nvim",  opts = {} },
     },
     ---@class PluginLspOpts
     opts = {
@@ -38,215 +29,70 @@ return {
         formatting_options = nil,
         timeout_ms = nil,
       },
-      -- LSP Server Settings
-      ---@type lspconfig.options
-      servers = {
-        ts_ls = {
-          root_dir = function(...)
-            return require("lspconfig.util").root_pattern(".git")(...)
-          end,
-        },
-        rust_analyzer = {
-          root_dir = function(...)
-            return require("lspconfig.util").root_pattern(".git")(...)
-          end,
-          settings = {
-            ["rust-analyzer"] = {
-              checkOnSave = {
-                command = "clippy",
-              },
-              diagnostics = {
-                enable = true,
-              },
-            },
-          },
-        },
-        lua_ls = {
-          -- mason = false, -- set to false if you don't want this server to be installed with mason
-          -- Use this to add any additional keymaps
-          -- for specific lsp servers
-          ---@type LazyKeysSpec[]
-          -- keys = {},
-          settings = {
-            Lua = {
-              workspace = {
-                checkThirdParty = false,
-              },
-              completion = {
-                callSnippet = "Replace",
-              },
-            },
-          },
-        },
-      },
-      -- you can do any additional lsp server setup here
-      -- return true if you don't want this server to be setup with lspconfig
-      ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
-      setup = {
-        ["jdtls"] = function(server, opts)
-          vim.api.nvim_create_autocmd("FileType", {
-            pattern = "java",
-            callback = function()
-              vim.opt_local.shiftwidth = 4
-              vim.opt_local.tabstop = 4
-            end,
-          })
-
-          -- require("lspconfig")[server].setup({
-          --   settings = {
-          --     java = {
-          --       format = {
-          --         settings = {
-          --           url = vim.fs.dirname(vim.fs.find({ "gradlew", ".git" }, { upward = true })[1])
-          --             .. "/java-code-style.xml",
-          --         },
-          --       },
-          --     },
-          --   },
-          -- })
-          return true
-        end,
-        -- example to setup with typescript.nvim
-        -- tsserver = function(_, opts)
-        --   require("typescript").setup({ server = opts })
-        --   return true
-        -- end,
-        -- Specify * to use this function as a fallback for any server
-        -- ["*"] = function(server, opts) end,
-        efm = function(_, opts)
-          local eslint = require("efmls-configs.linters.eslint_d")
-          local eslint_formatter = require("efmls-configs.formatters.eslint_d")
-          local prettier = require("efmls-configs.formatters.prettier")
-          local stylua = require("efmls-configs.formatters.stylua")
-
-          local languages = {
-            typescript = {
-              eslint,
-              eslint_formatter,
-              prettier,
-            },
-            typescriptreact = {
-              eslint,
-              eslint_formatter,
-              prettier,
-            },
-            lua = {
-              stylua,
-            },
-          }
-
-          local efmls_config = {
-            filetypes = vim.tbl_keys(languages),
-            settings = {
-              rootMarkers = { ".git/" },
-              languages = languages,
-            },
-            init_options = {
-              documentFormatting = true,
-              documentRangeFormatting = true,
-            },
-          }
-
-          require("lspconfig").efm.setup(vim.tbl_extend("force", efmls_config, {
-            -- Pass your custom lsp config below like on_attach and capabilities
-            --
-            -- on_attach = on_attach,
-            -- capabilities = capabilities,
-          }))
-
-          return true
-        end,
-      },
     },
     ---@param opts PluginLspOpts
     config = function(_, opts)
       require("jan.plugins.lsp.keymaps")
 
-      -- diagnostics
-      for name, icon in pairs(require("jan.config").icons.diagnostics) do
-        name = "DiagnosticSign" .. name
-        vim.fn.sign_define(name, { text = icon[0], texthl = name, numhl = "" })
-      end
+      local eslint = require("efmls-configs.linters.eslint_d")
+      local eslint_formatter = require("efmls-configs.formatters.eslint_d")
+      local prettier = require("efmls-configs.formatters.prettier")
+      local stylua = require("efmls-configs.formatters.stylua")
 
-      if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
-        opts.diagnostics.virtual_text.prefix = function(diagnostic)
-          local icons = require("janv.config").icons.diagnostics
-          for d, icon in pairs(icons) do
-            if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
-              return icon
-            end
-          end
-        end
-      end
+      local languages = {
+        typescript = {
+          eslint,
+          eslint_formatter,
+          prettier,
+        },
+        typescriptreact = {
+          eslint,
+          eslint_formatter,
+          prettier,
+        },
+        lua = {
+          stylua,
+        },
+      }
 
-      vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
+      local efmls_config = {
+        cmd = { "efm-langserver" },
+        filetypes = vim.tbl_keys(languages),
+        settings = {
+          rootMarkers = { "eslint.config.js" },
+          languages = languages,
+        },
+        init_options = {
+          documentFormatting = true,
+          documentRangeFormatting = true,
+        },
+      }
 
-      local servers = opts.servers
-      local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-      local capabilities = vim.tbl_deep_extend(
-        "force",
-        {},
-        vim.lsp.protocol.make_client_capabilities(),
-        has_cmp and cmp_nvim_lsp.default_capabilities() or {},
-        opts.capabilities or {}
-      )
+      vim.lsp.config["efmls"] = efmls_config;
+      vim.lsp.config["lua_ls"] = {
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { 'vim' }
+            }
+          }
+        }
+      };
 
-      local function setup(server)
-        local server_opts = vim.tbl_deep_extend("force", {
-          capabilities = vim.deepcopy(capabilities),
-        }, servers[server] or {})
+      vim.lsp.config["tsgo"] = {
+        cmd = { "tsgo", "--lsp", "--stdio" },
+        filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+        settings = {
+          rootMarkers = { ".git/" },
+        },
+      };
 
-        if opts.setup[server] then
-          if opts.setup[server](server, server_opts) then
-            return
-          end
-        elseif opts.setup["*"] then
-          if opts.setup["*"](server, server_opts) then
-            return
-          end
-        end
-        require("lspconfig")[server].setup(server_opts)
-      end
 
-      -- get all the servers that are available through mason-lspconfig
-      local have_mason, mlsp = pcall(require, "mason-lspconfig")
-      local all_mslp_servers = {}
-      if have_mason then
-        all_mslp_servers = require("mason-lspconfig").get_mappings().lspconfig_to_package
-      end
-
-      --local ensure_installed = {} ---@type string[]
-      for server in pairs(servers) do
-        setup(server)
-      end
-
-      for server in pairs(opts.setup) do
-        setup(server)
-      end
-
-      --setup("efm")
-      --setup("ts_ls")
-
-      --if have_mason then
-      --  mlsp.setup({
-      --    ensure_installed = ensure_installed,
-      --    handlers = { setup }
-      --  })
-      --end
+      vim.lsp.enable("efmls");
+      vim.lsp.enable("tsgo");
+      --vim.lsp.enable("ts_ls");
+      vim.lsp.enable("lua_ls");
+      vim.lsp.enable("clangd");
     end,
-  },
-  -- cmdline tools and lsp servers
-  {
-    "williamboman/mason.nvim",
-    cmd = "Mason",
-    keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
-    build = ":MasonUpdate",
-    opts = {
-      ensure_installed = {
-        "stylua",
-        "shfmt",
-        -- "flake8",
-      },
-    },
   },
 }

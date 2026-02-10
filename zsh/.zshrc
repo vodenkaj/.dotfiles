@@ -5,7 +5,7 @@ export VISUAL=nvim
 export EDITOR=nvim
 
 # Yarn path
-export PATH="/home/janv/.yarn/bin:$PATH:/home/janv/.cargo/bin:$HOME/Documents/tmuxifier"
+export PATH="/home/janv/.yarn/bin:$PATH:/home/janv/.cargo/bin"
 
 #source $ZSH/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 #source $ZSH/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
@@ -74,8 +74,8 @@ if [ -f "$HOME/.work" ]; then
     source "$HOME/.work"
 fi
 
+eval "$(direnv hook zsh)"
 eval "$(starship init zsh)"
-eval "$(tmuxifier.tmux init -)"
 
 alias dbcli="cargo r --manifest-path ~/Documents/rusty-db-cli/rusty_db_cli/Cargo.toml"
 alias clipaste="xclip -o -selection clipboard"

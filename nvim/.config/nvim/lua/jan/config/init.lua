@@ -43,7 +43,6 @@ M.icons = {
 
 M.init = function()
   require("jan.config.options")
-  require("jan.util").lazy_notify()
   require("jan.lazy")
   require("jan.keymaps")
 end

@@ -56,10 +56,6 @@ end
 
 return {
   {
-    "jay-babu/mason-nvim-dap.nvim",
-    lazy = true,
-  },
-  {
     "microsoft/vscode-js-debug",
     opt = true,
     init = function()
@@ -84,12 +80,6 @@ return {
       vim.keymap.set("n", "[DAP]s", "<cmd>lua require'dap'.step_over()<CR>", {})
       vim.keymap.set("n", "[DAP]S", "<cmd>lua require'dap'.step_into()<CR>", {})
       vim.keymap.set("n", "[DAP]t", ":DapToggleRepl<CR>", {})
-
-      require("mason-nvim-dap").setup({
-        ensure_installed = {},
-        automatic_installation = true,
-        handlers = {},
-      })
 
       -- For complied languages to work,
       -- you have to set /proc/sys/kernel/yama/ptrace_scope value to 0.

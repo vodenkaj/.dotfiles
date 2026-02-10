@@ -1,5 +1,5 @@
 tmxSession () {
-    selected=$(find ~/Documents -maxdepth 2 -mindepth 1 -type d | fzf)
+    selected=$({ find ~/Documents/reas/ -maxdepth 1 -mindepth 1 -type d & find ~/Documents -maxdepth 1 -mindepth 1 -type d;} | fzf)
     selected_name=$(basename "$selected" | tr . _)
     if [ -z $selected ]; then
         return
